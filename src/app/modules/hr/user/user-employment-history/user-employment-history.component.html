@@ -1,0 +1,37 @@
+<div class="content-wrapper">
+  <div class="page-header">
+    <h4>Quá trình công tác</h4>
+  </div>
+  <div class="table-container">
+    <mat-table class="" [dataSource]="dataSource">
+      <ng-container matColumnDef="STT">
+        <mat-header-cell *matHeaderCellDef>#</mat-header-cell>
+        <mat-cell *matCellDef='let item; let i = index;' class="centre">{{start + i}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="fromDate">
+        <mat-header-cell *matHeaderCellDef>Từ ngày</mat-header-cell>
+        <mat-cell *matCellDef='let item' class="centre">{{item.fromDate | date:'MM/yyyy'}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="toDate">
+        <mat-header-cell *matHeaderCellDef>Đến ngày</mat-header-cell>
+        <mat-cell *matCellDef='let item'>{{item.toDate | date:'MM/yyyy'}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="orgName">
+        <mat-header-cell *matHeaderCellDef>Phòng ban</mat-header-cell>
+        <mat-cell *matCellDef='let item' class="centre">{{item.orgName}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="jobTitle">
+        <mat-header-cell *matHeaderCellDef>Chức danh</mat-header-cell>
+        <mat-cell *matCellDef='let item' class="centre">{{item.jobTitle}}</mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+    </mat-table>
+  </div>
+  <mat-paginator [length]="countTotal" [pageSize]="length" [pageSizeOptions]="pageSizeOptions"></mat-paginator>
+</div>

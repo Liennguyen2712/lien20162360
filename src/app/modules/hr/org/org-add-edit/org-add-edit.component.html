@@ -1,0 +1,33 @@
+<div class="content-wrapper">
+  <div class="form-wrapper">
+    <div class="page-header">
+      <h5>Quản lý phòng ban</h5>
+    </div>
+    <div flex fxLayout="row" fxLayoutGap="50px" *ngIf="item != null" class="formRow">
+      <mat-form-field fxFlex="15">
+        <mat-label>Mã</mat-label>
+        <input matInput [(ngModel)]="item.code" required>
+      </mat-form-field>
+      <mat-form-field fxFlex="50">
+        <mat-label>Tên</mat-label>
+        <input matInput [(ngModel)]="item.name" required>
+      </mat-form-field>
+    </div>
+    <div flex fxLayout="row" fxLayoutGap="50px" *ngIf="item != null" class="formRow">
+      <mat-form-field fxFlex="15">
+        <mat-label>Phòng ban cha</mat-label>
+        <mat-extend-select required class="width" [items]="this.orgs" [valueField]="'id'" [displayField]="'name'"
+          [(selectedModel)]="item.parentId" [applyPanelOverride]="true" [disabled]="isReadOnly">
+        </mat-extend-select>
+        <input matInput style="display: none;" [(ngModel)]="item.parentId" required>
+      </mat-form-field>
+      <mat-form-field fxFlex="50">
+        <textarea matInput placeholder="Ghi chú" [(ngModel)]="item.description" rows="3"></textarea>
+      </mat-form-field>
+    </div>
+    <div class="button-wrapper" style="height: 130px;">
+      <button mat-raised-button color="primary" (click)="addOrEdit()">Lưu</button>
+      <a mat-raised-button color="warn" routerLink="/hr/hr-org">Hủy</a>
+    </div>
+  </div>
+</div>

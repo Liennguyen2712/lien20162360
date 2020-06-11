@@ -1,0 +1,124 @@
+<div class="content-wrapper">
+  <div class="form-wrapper">
+    <div class="page-header">
+      <h5>Điều chuyển nhân sự</h5>
+    </div>
+    <mat-divider class="mat-divider-header" style="margin-top: 0px !important"></mat-divider>
+    <div class="button-wrapper" style="margin-bottom: 10px;">
+      <button mat-raised-button color="primary" (click)="addOrEdit()">Lưu</button>
+      <a mat-raised-button color="warn" routerLink="/hr/hr-emp-transfer">Hủy</a>
+      <a mat-raised-button color="primary" routerLink="/emp/event-diary-config" style="margin-left: 10px;">Cấu hình NKSK</a>
+    </div>
+    <div class="clearFix">
+    </div>
+    <div flex fxLayout="row" fxLayoutGap="100px" *ngIf="item != null" class="formRow">
+      <div fxFlex="20">
+        <mat-form-field fxFlex="100">
+          <mat-label>Mã điều chuyển</mat-label>
+          <input matInput [(ngModel)]="item.code" required>
+        </mat-form-field>
+      </div>
+      <div fxFlex>
+        <mat-form-field fxFlex="60">
+          <mat-label>Ngày điều chuyển</mat-label>
+          <input matInput [matDatepicker]="pickerTrnDate" [(ngModel)]="item.transferDate">
+          <mat-datepicker-toggle matSuffix [for]="pickerTrnDate"></mat-datepicker-toggle>
+          <mat-datepicker #pickerTrnDate></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div fxFlex="20">
+        <mat-form-field fxFlex="100">
+          <mat-label>Họ tên nhân viên</mat-label>
+          <mat-extend-select required class="width" [items]="this.UserOrgs" [valueField]="'id'"
+            [displayField]="'userFullName'" [(selectedModel)]="this.item.userId" [applyPanelOverride]="true"
+            (selectedModelChange)="UserSelectChanged()">
+          </mat-extend-select>
+          <input matInput style="display: none;" [(ngModel)]="this.item.userId">
+        </mat-form-field>
+      </div>
+    </div>
+    <div flex fxLayout="row" fxLayoutGap="100px" *ngIf="item != null" class="formRow">
+      <div fxFlex="20">
+        <mat-form-field fxFlex="100">
+          <mat-label>Chức danh cũ</mat-label>
+          <mat-extend-select [disabled]="true" [items]="this.JobTitles" [valueField]="'id'" [displayField]="'title'"
+            [(selectedModel)]="this.item.oldJobTitleId" [applyPanelOverride]="true">
+          </mat-extend-select>
+          <input matInput style="display: none;" [(ngModel)]="this.item.oldJobTitleId" disabled>
+        </mat-form-field>
+      </div>
+      <div fxFlex>
+        <mat-form-field fxFlex="100">
+          <mat-label>Phòng ban cũ</mat-label>
+          <mat-extend-select [disabled]="true" [items]="this.Orgs" [valueField]="'id'" [displayField]="'name'"
+            [(selectedModel)]="this.item.oldOrgId" [applyPanelOverride]="true" style="max-height:50px;">
+          </mat-extend-select>
+          <input matInput style="display: none;" [(ngModel)]="this.item.oldOrgId" disabled>
+        </mat-form-field>
+      </div>
+      <div fxFlex="20">
+        <mat-form-field fxFlex="100">
+          <mat-label>Quản lý trực tiếp</mat-label>
+          <mat-extend-select [disabled]="true" [items]="this.UserOrgs" [valueField]="'id'"
+            [displayField]="'userFullName'" [(selectedModel)]="this.item.oldLevel1MngId" [applyPanelOverride]="true"
+            style="max-height:50px;">
+          </mat-extend-select>
+          <input matInput style="display: none;" [(ngModel)]="this.item.oldLevel1MngId" disabled>
+        </mat-form-field>
+      </div>
+    </div>
+    <div flex fxLayout="row" fxLayoutGap="100px" *ngIf="item != null" class="formRow">
+      <div fxFlex="20">
+        <mat-form-field fxFlex="100">
+          <mat-label>Quản lý cấp trên</mat-label>
+          <mat-extend-select [disabled]="true" [items]="this.UserOrgs" [valueField]="'id'"
+            [displayField]="'userFullName'" [(selectedModel)]="this.item.oldLevel2MngId" [applyPanelOverride]="true"
+            style="max-height:50px;">
+          </mat-extend-select>
+          <input matInput style="display: none;" [(ngModel)]="this.item.oldLevel2MngId" disabled>
+        </mat-form-field>
+      </div>
+    </div>
+    <div flex fxLayout="row" fxLayoutGap="100px" *ngIf="item != null" class="formRow">
+      <div fxFlex="20">
+        <mat-form-field fxFlex="100">
+          <mat-label>Chức danh mới</mat-label>
+          <mat-extend-select [items]="this.JobTitles" [valueField]="'id'" [displayField]="'title'"
+            [(selectedModel)]="this.item.newJobTitleId" [applyPanelOverride]="true">
+          </mat-extend-select>
+          <input matInput style="display: none;" [(ngModel)]="this.item.newJobTitleId">
+        </mat-form-field>
+      </div>
+      <div fxFlex>
+        <mat-form-field fxFlex="100">
+          <mat-label>Phòng ban mới</mat-label>
+          <mat-extend-select required class="width" [items]="this.Orgs" [valueField]="'id'" [displayField]="'name'"
+            [(selectedModel)]="this.item.newOrgId" [applyPanelOverride]="true">
+          </mat-extend-select>
+          <input matInput style="display: none;" [(ngModel)]="this.item.newOrgId">
+        </mat-form-field>
+      </div>
+      <div fxFlex="20">
+        <mat-form-field fxFlex="100">
+          <mat-label>Quản lý trực tiếp mới</mat-label>
+          <mat-extend-select required class="width" [items]="this.UserOrgs" [valueField]="'id'"
+            [displayField]="'userFullName'" [(selectedModel)]="this.item.newLevel1MngId" [applyPanelOverride]="true">
+          </mat-extend-select>
+          <input matInput style="display: none;" [(ngModel)]="this.item.newLevel1MngId">
+        </mat-form-field>
+      </div>
+    </div>
+    <div flex fxLayout="row" fxLayoutGap="100px" *ngIf="item != null" class="formRow">
+      <div fxFlex="20">
+        <mat-form-field fxFlex="100">
+          <mat-label>Quản lý cấp trên mới</mat-label>
+          <mat-extend-select required class="width" [items]="this.UserOrgs" [valueField]="'id'"
+            [displayField]="'userFullName'" [(selectedModel)]="this.item.newLevel2MngId" [applyPanelOverride]="true"
+            style="max-height:50px;">
+          </mat-extend-select>
+          <input matInput style="display: none;" [(ngModel)]="this.item.newLevel2MngId">
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+</div>

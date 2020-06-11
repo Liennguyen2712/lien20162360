@@ -1,0 +1,38 @@
+.mat-cell {
+  cursor: pointer;
+  vertical-align: middle;
+}
+
+.colSTT {
+  min-width: 40px;
+  max-width: 40px;
+}
+
+.colName {
+  min-width: 250px;
+  max-width: 250px;
+}
+
+.colTotal {
+  min-width: 120px;
+  max-width: 120px;
+}
+
+.mat-header-cell {
+  background: rgba(161, 194, 128, 1);
+}
+
+.linkName {
+  text-decoration: underline !important;
+  cursor: pointer;
+}
+
+.linkName:hover {
+  color: #0056b3 !important;
+  cursor: pointer;
+}
+
+.deleted {
+  text-decoration: line-through;
+  font-size: 13px;
+}

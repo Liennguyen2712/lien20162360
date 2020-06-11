@@ -1,0 +1,72 @@
+<div class="content-wrapper">
+  <div class="form-wrapper">
+
+    <div class="page-header">
+      <h5>Phân quyền xem - quản lý khối/đơn vị</h5>
+    </div>
+    <div style="margin-top: 15px;" flex fxLayout="row" fxLayoutGap="10px" *ngIf="item != null" class="formRow">
+      <div fxFlex="20">
+        <mat-form-field class="fullWidth">
+          <mat-label>Họ tên quản lý</mat-label>
+          <input matInput [(ngModel)]="item.userFullName" disabled>
+        </mat-form-field>
+      </div>
+      <div fxFlex="20">
+        <mat-form-field class="fullWidth">
+          <mat-label>Chức danh</mat-label>
+          <input matInput [(ngModel)]="item.jobTitle" disabled>
+        </mat-form-field>
+      </div>
+      <div fxFlex="30">
+        <mat-form-field class="fullWidth">
+          <mat-label>Phòng ban/đơn vị</mat-label>
+          <input matInput [(ngModel)]="item.orgName" disabled>
+        </mat-form-field>
+      </div>
+      <div fxFlex="25">
+        <button mat-raised-button color="primary" (click)="updateDivisionManagerPermission()">Lưu</button>
+        <button mat-raised-button color="warn" (click)="goBack()" style="margin-left: 10px;">Quay lại</button>
+      </div>
+    </div>
+  </div>
+  <div style="margin-top: 15px;" flex fxLayout="row" fxLayoutGap="10px" *ngIf="item != null" class="formRow">
+    <div fxFlex="40">
+      <mat-form-field class="fullWidth">
+        <mat-label>Phòng ban/đơn vị</mat-label>
+        <mat-extend-select required class="width" [items]="this.Orgs" [valueField]="'id'" [displayField]="'name'"
+          [(selectedModel)]="orgId" [applyPanelOverride]="true">
+        </mat-extend-select>
+        <input matInput style="display: none;" [(ngModel)]="orgId">
+      </mat-form-field>
+    </div>
+    <div fxFlex="10">
+      <a mat-button (click)="addOrg()" color="primary">
+        <mat-icon>add_circle_outline</mat-icon>
+      </a>
+    </div>
+  </div>
+  <div class="table-container">
+    <mat-table class="" [dataSource]="dataSource">
+      <ng-container matColumnDef="STT">
+        <mat-header-cell *matHeaderCellDef>#</mat-header-cell>
+        <mat-cell *matCellDef='let element; let i = index;' class="centre">{{i +1}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="orgName">
+        <mat-header-cell *matHeaderCellDef>Tên phòng ban</mat-header-cell>
+        <mat-cell *matCellDef='let element' class="centre">{{element.orgName}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef>TT</mat-header-cell>
+        <mat-cell *matCellDef="let element" class="centre">
+          <a mat-button (click)="remove(element)" color="warn">
+            <mat-icon>remove_circle_outline</mat-icon>
+          </a>
+        </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+    </mat-table>
+  </div>
+</div>

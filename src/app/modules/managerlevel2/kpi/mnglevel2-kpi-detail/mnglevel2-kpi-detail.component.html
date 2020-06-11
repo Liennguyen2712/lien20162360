@@ -1,0 +1,333 @@
+<div class="content-wrapper">
+  <div class="page-header">
+    <h5>Bảng kế hoạch và đánh giá thực hiện công việc - quản lý cấp trên</h5>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="clearFix">
+    <div class="button-wrapper">
+      <button mat-raised-button color="primary" (click)="addOrEdit()" *ngIf="!isReadOnly">Gửi nhân sự</button>
+      <button mat-raised-button color="primary" (click)="exportExcel()">Export Excel</button>
+      <a mat-raised-button (click)="goBack()">Quay lại</a>
+    </div>
+  </div>
+  <div class="form-wrapper">
+    <!-- <div flex fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="15px" fxLayoutGap.sm="0px" *ngIf="item != null">
+        <mat-form-field fxFlex>
+          <mat-label>Họ và tên cán bộ</mat-label>
+          <input matInput [(ngModel)]="item.employeeName" disabled>
+        </mat-form-field>
+        <mat-form-field fxFlex>
+          <mat-label>Chức danh</mat-label>
+          <input matInput [(ngModel)]="item.employeeJobTitle" disabled>
+        </mat-form-field>
+        <mat-form-field fxFlex>
+          <mat-label>Họ và tên quản lý trực tiếp</mat-label>
+          <input matInput [(ngModel)]="item.level1ManagerFullName" disabled>
+        </mat-form-field>
+        <mat-form-field fxFlex>
+          <mat-label>Chức danh</mat-label>
+          <input matInput [(ngModel)]="item.level1ManagerJobTitle" disabled>
+        </mat-form-field>
+        <mat-form-field fxFlex>
+          <mat-label>Kì đánh giá</mat-label>
+          <input matInput [(ngModel)]="item.kpiMonthNumber" disabled>
+        </mat-form-field>
+        <mat-form-field fxFlex>
+          <mat-label>Phòng ban</mat-label>
+          <input matInput [(ngModel)]="item.organization" disabled>
+        </mat-form-field>
+        <mat-form-field fxFlex>
+          <mat-label>Mẫu đánh giá</mat-label>
+          <input matInput [(ngModel)]="item.criterionTypeName" disabled>
+        </mat-form-field>
+      </div> -->
+
+    <div flex fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="15px" fxLayoutGap.sm="0px" *ngIf="item != null">
+      <mat-form-field fxFlex=16>
+        <mat-label>Họ và tên cán bộ</mat-label>
+        <input matInput [(ngModel)]="item.employeeName" disabled>
+      </mat-form-field>
+      <mat-form-field fxFlex=16>
+        <mat-label>Chức danh</mat-label>
+        <input matInput [(ngModel)]="item.employeeJobTitle" disabled>
+      </mat-form-field>
+      <mat-form-field fxFlex=16>
+        <mat-label>Họ và tên quản lý trực tiếp</mat-label>
+        <input matInput [(ngModel)]="item.level1ManagerFullName" disabled>
+      </mat-form-field>
+      <mat-form-field fxFlex=16>
+        <mat-label>Chức danh</mat-label>
+        <input matInput [(ngModel)]="item.level1ManagerJobTitle" disabled>
+      </mat-form-field>
+      <mat-form-field fxFlex=16>
+        <mat-label>Họ và tên quản lý cấp trên</mat-label>
+        <input matInput [(ngModel)]="item.level2ManagerFullName" disabled>
+      </mat-form-field>
+      <mat-form-field fxFlex=16>
+        <mat-label>Chức danh quản lý cấp trên</mat-label>
+        <input matInput [(ngModel)]="item.level2ManagerJobTitle" disabled>
+      </mat-form-field>
+    </div>
+    <div flex fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="15px" fxLayoutGap.sm="0px" *ngIf="item != null">
+      <mat-form-field fxFlex=16>
+        <mat-label>Trạng thái</mat-label>
+        <input matInput [(ngModel)]="item.statusName" disabled>
+      </mat-form-field>
+      <mat-form-field fxFlex=16>
+        <mat-label>Kì đánh giá</mat-label>
+        <input matInput [(ngModel)]="item.kpiMonthNumber" disabled>
+      </mat-form-field>
+      <mat-form-field fxFlex=16>
+        <mat-label>Phòng ban</mat-label>
+        <input matInput [(ngModel)]="item.organization" disabled>
+      </mat-form-field>
+      <mat-form-field fxFlex=16>
+        <mat-label>Ghi chú</mat-label>
+        <input matInput [(ngModel)]="item.submitNote" disabled>
+      </mat-form-field>
+      <mat-form-field class="table-cell-datepicker" fxFlex=16>
+        <input matInput [matDatepicker]="picker" [(ngModel)]="item.sentHRDate" placeholder="Ngày gửi nhân sự" disabled>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field fxFlex=16>
+        <mat-label>Mẫu đánh giá</mat-label>
+        <input matInput [(ngModel)]="item.criterionTypeName" disabled>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <label class="lb-sm">Kế hoạch nhiệm vụ công việc đầu kì</label>
+  <div class="partial-table-wrapper" *ngIf="item!=null && item.taskList!=null">
+    <table #taskTbl mat-table [dataSource]="item.taskList">
+      <ng-container matColumnDef="STT" class="centre">
+        <th mat-header-cell *matHeaderCellDef> No. </th>
+        <td mat-cell *matCellDef="let element; let i = index;">{{i + 1}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="task">
+        <th mat-header-cell *matHeaderCellDef> Danh mục công việc </th>
+        <td mat-cell *matCellDef="let element" class="align-top">
+          <div class="cell-wrapper">
+            <textarea matInput [(ngModel)]="element.task" matTextareaAutosize class="no-scroll"
+              [disabled]="true"></textarea>
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="assignedDate">
+        <th mat-header-cell *matHeaderCellDef> Ngày giao việc </th>
+        <td mat-cell *matCellDef="let element" class="centre">
+          <!-- {{element.assignedDate | date:'dd-MM-yyyy'}}  -->
+          {{element.assignedDate | date:'dd-MM-yyyy'}}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="expectation">
+        <th mat-header-cell *matHeaderCellDef> Kết quả đầu ra yêu cầu </th>
+        <td mat-cell *matCellDef="let element" class="align-top">
+          <div class="cell-wrapper">
+            <textarea matInput [(ngModel)]="element.expectation" matTextareaAutosize class="no-scroll"
+              [disabled]="true"></textarea>
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="deadline">
+        <th mat-header-cell *matHeaderCellDef> Thời hạn hoàn thành </th>
+        <td mat-cell *matCellDef="let element" class="centre">
+          {{element.deadline | date:'dd-MM-yyyy'}}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="result">
+        <th mat-header-cell *matHeaderCellDef> Tình trạng, kết quả thực hiện </th>
+        <td mat-cell *matCellDef="let element" class="align-top">
+          <div class="cell-wrapper">
+            <textarea matInput [(ngModel)]="element.result" matTextareaAutosize class="no-scroll"
+              [disabled]="true"></textarea>
+          </div>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="taskDisplayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: taskDisplayedColumns;"></tr>
+    </table>
+  </div>
+
+  <mat-divider></mat-divider>
+  <div class="button-wrapper">
+    <button mat-raised-button color="warn" (click)="viewEventDiary()">Danh sách nhật ký SKPS</button>
+  </div>
+  <label class="lb-sm">Kết quả đánh giá Kpi</label>
+  <div class="partial-table-wrapper">
+    <table #taskCrite mat-table [dataSource]="criterionDetails">
+      <ng-container matColumnDef="STT">
+        <th mat-header-cell *matHeaderCellDef> STT </th>
+        <td mat-cell *matCellDef="let element; let i = index;">{{i + 1}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="criterionTitle">
+        <th mat-header-cell *matHeaderCellDef> Tiêu chuẩn đánh giá </th>
+        <td mat-cell *matCellDef="let element">{{element.criterionTitle}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="maximumPoint">
+        <th mat-header-cell *matHeaderCellDef>
+          <div>Điểm chuẩn</div>
+          <div>(%)</div>
+        </th>
+        <td mat-cell *matCellDef="let element" class="centre">
+          {{element.maximumPoint}}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="employeeEvaluatePoint">
+        <th mat-header-cell *matHeaderCellDef>
+          <div>Nhân viên tự ĐG</div>
+          <div>(%)</div>
+        </th>
+        <td mat-cell *matCellDef="let element" class="centre">
+          <ng-template [ngIf]="element.aggregateRow == null || element.aggregateRow == 0">
+            <input matInput type="number" [(ngModel)]="element.employeeEvaluatePoint"
+              (ngModelChange)="calCriterionAggregateRow()" [disabled]="true">
+          </ng-template>
+          <ng-template [ngIf]="element.aggregateRow == 1">
+            <!-- {{element.employeeEvaluatePoint}} -->
+            {{item.empKpiPoint}}
+          </ng-template>
+          <ng-template [ngIf]="element.aggregateRow == 2">
+            {{item.empKpiClassification}}
+          </ng-template>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="employeeEvaluateDate">
+        <th mat-header-cell *matHeaderCellDef> Ngày đánh giá </th>
+        <td mat-cell *matCellDef="let element" class="centre">
+          <ng-template [ngIf]="element.aggregateRow == null || element.aggregateRow == 0">
+            <mat-form-field class="table-cell-datepicker" appearance="none">
+              <input matInput [matDatepicker]="picker" [(ngModel)]="element.employeeLastUpdatedDate" [disabled]="true">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+          </ng-template>
+        </td>
+      </ng-container>
+
+      <!-- <ng-container matColumnDef="employeeEvaluateComment">
+          <th mat-header-cell *matHeaderCellDef> Ghi chú </th>
+          <td mat-cell *matCellDef="let element" class="align-top">
+            <ng-template [ngIf]="element.aggregateRow == null || element.aggregateRow == 0">
+              <div class="cell-wrapper">
+                <textarea matInput [(ngModel)]="element.employeeEvaluateComment" matTextareaAutosize class="no-scroll" [disabled]="true"></textarea>
+              </div>
+            </ng-template>
+          </td>
+        </ng-container> -->
+
+      <ng-container matColumnDef="managerEvaluatePoint">
+        <th mat-header-cell *matHeaderCellDef>
+          <div>Điểm ĐG </div>
+          <div>của quản lý</div>
+        </th>
+        <td mat-cell *matCellDef="let element" class="centre">
+          <ng-template [ngIf]="element.aggregateRow == null || element.aggregateRow == 0">
+            <input matInput type="number" [(ngModel)]="element.managerEvaluatePoint" disabled>
+          </ng-template>
+          <ng-template [ngIf]="element.aggregateRow == 1">
+            <!-- {{element.managerEvaluatePoint}} -->
+            {{item.level1ManagerKpiPoint}}
+          </ng-template>
+          <ng-template [ngIf]="element.aggregateRow == 2">
+            <!-- {{element.managerEvaluatePointChar}} -->
+            {{item.level1ManagerKpiClassification}}
+          </ng-template>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="managerEvaluateDate">
+        <th mat-header-cell *matHeaderCellDef> Ngày đánh giá </th>
+        <td mat-cell *matCellDef="let element" class="centre">
+          <ng-template [ngIf]="element.aggregateRow == null || element.aggregateRow == 0">
+            <mat-form-field class="table-cell-datepicker" appearance="none">
+              <input matInput [matDatepicker]="picker" [(ngModel)]="element.managerLastUpdatedDate" disabled>
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+          </ng-template>
+        </td>
+      </ng-container>
+
+      <!-- <ng-container matColumnDef="managerEvaluateComment">
+          <th mat-header-cell *matHeaderCellDef> Ghi chú </th>
+          <td mat-cell *matCellDef="let element" class="align-top">
+            <ng-template [ngIf]="element.aggregateRow == null || element.aggregateRow == 0">
+              <div class="cell-wrapper">
+                <textarea matInput [(ngModel)]="element.managerEvaluateComment" matTextareaAutosize class="no-scroll" autofocus disabled></textarea>
+              </div>
+            </ng-template>
+          </td>
+        </ng-container> -->
+
+      <tr mat-header-row *matHeaderRowDef="criterionDisplayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: criterionDisplayedColumns;"></tr>
+    </table>
+  </div>
+
+  <mat-divider></mat-divider>
+  <div flex fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="12px" fxLayoutGap.sm="0px" style="margin-top: 8px"
+    *ngIf="item != null">
+    <label class="lb-sm" fxFlex="10">Đề xuất của GĐ nhân sự</label>
+    <div class="form-wrapper" fxFlex="90">
+      <div flex fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="12px" fxLayoutGap.sm="0px">
+        <div flex fxLayout="column" fxLayout.lt-sm="column" fxFlex="15">
+          <mat-form-field fxFlex>
+            <mat-label>Tổng điểm KPI</mat-label>
+            <input type="number" matInput [(ngModel)]="item.hrKpiPoint" disabled>
+          </mat-form-field>
+          <mat-form-field fxFlex>
+            <mat-label>Xếp loại</mat-label>
+            <input type="text" matInput [(ngModel)]="item.hrKpiPointClassification" disabled>
+          </mat-form-field>
+        </div>
+        <mat-form-field fxFlex>
+          <mat-label>Nội dung</mat-label>
+          <textarea matInput matTextareaAutosize class="no-scroll" [(ngModel)]="item.hrKpiPointComment"
+            disabled></textarea>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+
+  <div flex fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="12px" fxLayoutGap.sm="0px" style="margin-top: 8px"
+    *ngIf="item != null">
+    <label class="lb-sm" fxFlex="10">Phê duyệt của lãnh đạo</label>
+    <div class="form-wrapper" fxFlex="90">
+      <div flex fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="12px" fxLayoutGap.sm="0px">
+        <div flex fxLayout="column" fxLayout.lt-sm="column" fxFlex="15">
+          <mat-form-field fxFlex>
+            <mat-label>Tổng điểm KPI</mat-label>
+            <input type="number" matInput [(ngModel)]="item.finalKpiPoint" disabled>
+          </mat-form-field>
+          <mat-form-field fxFlex>
+            <mat-label>Xếp loại</mat-label>
+            <input type="text" matInput [(ngModel)]="item.finalKpiClassification" disabled>
+          </mat-form-field>
+        </div>
+        <mat-form-field fxFlex>
+          <mat-label>Nội dung</mat-label>
+          <textarea matInput matTextareaAutosize class="no-scroll" [(ngModel)]="item.finalKpiComment"
+            disabled></textarea>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+
+  <mat-divider></mat-divider>
+  <div class="button-wrapper" style="height: 130px;">
+    <button mat-raised-button color="primary" (click)="addOrEdit()" *ngIf="!isReadOnly">Gửi nhân sự</button>
+    <a mat-raised-button (click)="goBack()">Quay lại</a>
+  </div>
+  <mat-divider></mat-divider>
+</div>

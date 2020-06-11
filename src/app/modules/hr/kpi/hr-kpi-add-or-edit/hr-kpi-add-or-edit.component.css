@@ -1,0 +1,44 @@
+
+.mat-divider{
+    margin: 20px 0 !important;
+}
+
+.mat-column-assignedDate {
+    width: 130px;
+}
+
+.mat-column-deadline {
+    width: 130px;
+}
+
+.mat-column-employeeEvaluateDate {
+    width: 130px;
+}
+
+.mat-column-managerEvaluateDate {
+    width: 130px;
+}
+
+.mat-column-maximumPoint {
+    width: 85px;
+}
+
+.mat-column-employeeEvaluatePoint {
+    width: 100px;
+}
+
+.mat-column-criterionTitle {
+    width: 300px;
+}
+
+.mat-column-managerEvaluatePoint {
+    width: 100px;
+}
+
+.mat-column-actions {
+    width: 50px;
+}
+
+.table-cell-datepicker {
+    width: 110px;
+}

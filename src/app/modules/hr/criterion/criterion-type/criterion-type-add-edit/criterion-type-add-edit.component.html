@@ -1,0 +1,67 @@
+<div class="content-wrapper">
+  <div class="form-wrapper">
+    <div class="page-header">
+      <h5>Quản lý bộ tiêu chuẩn đánh giá</h5>
+    </div>
+    <div flex fxLayout="row" fxLayoutGap="10px" *ngIf="item != null" class="formRow">
+      <mat-form-field fxFlex="15">
+        <mat-label>Mã</mat-label>
+        <input matInput [(ngModel)]="item.code" required>
+      </mat-form-field>
+      <mat-form-field fxFlex="50">
+        <mat-label>Tên</mat-label>
+        <input matInput [(ngModel)]="item.name" required>
+      </mat-form-field>
+      <div fxFlex="50">
+        <button mat-raised-button color="primary" (click)="addOrEdit()">Lưu</button>
+        <a mat-raised-button color="warn" routerLink="/hr/hr-crit-type" style="margin-left: 10px;">Hủy</a></div>
+    </div>
+  </div>
+  <div style="margin-top: 15px;" flex fxLayout="row" fxLayoutGap="10px" *ngIf="item != null" class="formRow">
+    <mat-form-field fxFlex="40">
+      <mat-label>Tiêu chuẩn</mat-label>
+      <mat-extend-select required class="width" [items]="this.kpiCatalogs" [valueField]="'id'"
+        [displayField]="'criterionTitle'" [(selectedModel)]="catalogId" [applyPanelOverride]="true">
+      </mat-extend-select>
+      <input matInput style="display: none;" [(ngModel)]="catalogId">
+    </mat-form-field>
+    <mat-form-field fxFlex="10">
+      <mat-label>Điểm mặc định</mat-label>
+      <input matInput type="number" [(ngModel)]="startPoint" min="1" oninput="validity.valid||(value='')">
+    </mat-form-field>
+    <div fxFlex="10">
+      <a mat-button (click)="addCatalog()" color="primary">
+        <mat-icon>add_circle_outline</mat-icon>
+      </a>
+    </div>
+  </div>
+  <div class="table-container">
+    <mat-table class="" [dataSource]="dataSource">
+      <ng-container matColumnDef="STT">
+        <mat-header-cell *matHeaderCellDef>#</mat-header-cell>
+        <mat-cell *matCellDef='let element; let i = index;' class="centre">{{i +1}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="catalogName">
+        <mat-header-cell *matHeaderCellDef>Tiêu chuẩn đánh giá</mat-header-cell>
+        <mat-cell *matCellDef='let element' class="centre">{{element.catalogName}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="startPoint">
+        <mat-header-cell *matHeaderCellDef>Điểm mặc định</mat-header-cell>
+        <mat-cell *matCellDef='let element' class="centre">{{element.startPoint}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef>TT</mat-header-cell>
+        <mat-cell *matCellDef="let element" class="centre">
+          <a mat-button (click)="remove(element)" color="warn">
+            <mat-icon>remove_circle_outline</mat-icon>
+          </a>
+        </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+    </mat-table>
+  </div>
+</div>

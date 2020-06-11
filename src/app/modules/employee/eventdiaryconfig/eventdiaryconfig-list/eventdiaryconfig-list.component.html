@@ -1,0 +1,90 @@
+<div class="content-wrapper">
+  <div class="page-header">
+    <h4>Cấu hình nhân viên trong Nhật ký sự kiện phát sinh</h4>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="filter-container" (keydown)="onFormSubmit($event)">
+    <div flex fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="9px" fxLayoutGap.sm="0px">
+      <mat-form-field fxFlex="20">
+        <mat-label>Phòng ban</mat-label>
+        <mat-extend-select required class="width" [items]="Orgs" [valueField]="'id'" [displayField]="'name'"
+          [(selectedModel)]="orgId" [applyPanelOverride]="true">
+        </mat-extend-select>
+        <input matInput  style="display: none;" [(ngModel)]="orgId">
+      </mat-form-field>
+      <mat-form-field fxFlex="20">
+        <mat-label>Quản lý trực tiếp</mat-label>
+        <mat-extend-select required class="width" [items]="UserOrgs" [valueField]="'id'" [displayField]="'userFullName'"
+          [(selectedModel)]="level1ManagerId" [applyPanelOverride]="true">
+        </mat-extend-select>
+        <input matInput  style="display: none;" [(ngModel)]="level1ManagerId">
+      </mat-form-field>
+      <mat-form-field fxFlex="20">
+        <mat-label>Quản lý cấp trên</mat-label>
+        <mat-extend-select required class="width" [items]="UserOrgs" [valueField]="'id'" [displayField]="'userFullName'"
+          [(selectedModel)]="level2ManagerId" [applyPanelOverride]="true">
+        </mat-extend-select>
+        <input matInput  style="display: none;" [(ngModel)]="level2ManagerId">
+      </mat-form-field>
+      <div fxFlex="10">
+        <button mat-raised-button color="primary" (click)="searchPaging()">Tìm kiếm</button>
+      </div>
+      <div fxFlex="10">
+        <button mat-raised-button color="primary" style="margin-left: 5px"
+          [routerLink]="['/emp/event-config-add-or-edit',0]">Thêm mới</button>
+      </div>
+    </div>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="table-container">
+    <mat-table class="" [dataSource]="dataSource">
+      <ng-container matColumnDef="STT">
+        <mat-header-cell *matHeaderCellDef>#</mat-header-cell>
+        <mat-cell *matCellDef='let item; let i = index;'>{{start + i}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="Code">
+        <mat-header-cell *matHeaderCellDef>Mã</mat-header-cell>
+        <mat-cell *matCellDef='let item'>{{item.code}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="orgName">
+        <mat-header-cell *matHeaderCellDef>Phòng ban</mat-header-cell>
+        <mat-cell *matCellDef='let item'>{{item.orgName}}</mat-cell>
+      </ng-container>
+
+
+      <ng-container matColumnDef="level1ManagerName">
+        <mat-header-cell *matHeaderCellDef>Tên quản lý trực tiếp</mat-header-cell>
+        <mat-cell *matCellDef='let item'>{{item.level1ManagerFullName}}</mat-cell>
+      </ng-container>
+
+
+      <ng-container matColumnDef="Level2ManagerFullName">
+        <mat-header-cell *matHeaderCellDef>Tên quản lý cấp trên</mat-header-cell>
+        <mat-cell *matCellDef='let item'>{{item.level2ManagerFullName}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <mat-header-cell *matHeaderCellDef>Trạng thái</mat-header-cell>
+        <mat-cell *matCellDef='let item'>
+          <span *ngIf="item.isActive">Hiệu lực</span>
+          <span *ngIf="!item.isActive">Không hiệu lực</span>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef>Thao Tác</mat-header-cell>
+        <mat-cell *matCellDef="let item">
+          <!-- <button mat-icon-button>
+            <mat-icon>edit_outline</mat-icon>
+          </button> -->
+          <a [routerLink]="['/emp/event-config-add-or-edit',item.id]">
+            <mat-icon>edit_outline</mat-icon>
+          </a>
+        </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+    </mat-table>
+  </div>
+  <mat-paginator [length]="countTotal" [pageSize]="length" [pageSizeOptions]="pageSizeOptions"></mat-paginator>
+</div>

@@ -1,0 +1,87 @@
+<div class="content-wrapper">
+  <div class="page-header">
+    <h5>Nhật ký sự kiện phát sinh - GĐ Nhân sự</h5>
+  </div>
+  <mat-divider></mat-divider>
+  <label class="lb-sm">Nhật ký sự kiện phát sinh</label>
+  <div class="filter-container">
+    <div flex fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="15px" fxLayoutGap.sm="0px">
+      <mat-form-field fxFlex="40">
+        <mat-label>Phòng ban</mat-label>
+        <mat-extend-select required class="width" [items]="this.displayEventOrgs" [valueField]="'orgId'"
+          [displayField]="'orgName'" [(selectedModel)]="filter.orgId" [applyPanelOverride]="true"
+          (selectedModelChange)="orgChange()">
+        </mat-extend-select>
+        <input matInput style="display: none;" [(ngModel)]="filter.orgId">
+      </mat-form-field>
+      <mat-form-field fxFlex="15">
+        <mat-label>Quản lý trực tiếp</mat-label>
+        <mat-extend-select required class="width" [items]="this.level1Users" [valueField]="'level1ManagerUserName'"
+          [displayField]="'level1ManagerFullName'" [(selectedModel)]="level1MngUserName" [applyPanelOverride]="true">
+        </mat-extend-select>
+        <input matInput style="display: none;" [(ngModel)]="level1MngUserName">
+      </mat-form-field>
+      <mat-form-field fxFlex="10">
+        <!-- <mat-label>Thời gian đánh giá*</mat-label> -->
+        <input matInput [matDatepicker]="dp" placeholder="Thời gian đánh giá*" [formControl]="diaryDate">
+        <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+        <mat-datepicker #dp startView="multi-year" (yearSelected)="chosenYearHandler($event)"
+          (monthSelected)="chosenMonthHandler($event, dp)" panelClass="example-month-picker">
+        </mat-datepicker>
+      </mat-form-field>
+      <div fxFlex="25">
+        <button mat-raised-button color="primary" (click)="getData()">Tìm kiếm</button>
+        <button mat-raised-button color="primary" (click)="exportExcel()" style="margin-left: 10px;">Export
+          Excel</button>
+      </div>
+    </div>
+  </div>
+  <label class="lb-sm">Bảng mã tích sự kiện</label>
+  <div class="table-container" *ngIf="isFinishLoadingTbl">
+    <mat-table #tbl [dataSource]="dataSource">
+      <ng-container matColumnDef="STT" sticky>
+        <mat-header-cell *matHeaderCellDef class="colSTT">#</mat-header-cell>
+        <mat-cell *matCellDef='let item; let i = index;' class="centre">{{i + 1}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="EmpName" sticky>
+        <mat-header-cell *matHeaderCellDef class="colName">Họ tên nhân viên</mat-header-cell>
+        <mat-cell *matCellDef="let item" class="centre">
+          <a (click)="openDetailsDialog(item.empName)" class="linkName">{{ item.empName }}</a>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="KpiPoint" sticky>
+        <mat-header-cell *matHeaderCellDef class="colTotal">Tổng điểm KPI(%)</mat-header-cell>
+        <mat-cell *matCellDef="let item" class="centre">
+          <span>{{ item.kpiPoint }}</span>
+        </mat-cell>
+      </ng-container>
+
+      <!-- loop day of month -->
+      <ng-container *ngFor="let col of loopColumns" matColumnDef="{{col}}">
+        <mat-header-cell *matHeaderCellDef> {{col}} </mat-header-cell>
+        <mat-cell *matCellDef="let item" class="centre">
+          <ng-container *ngIf="item[col].cellType == DiaryCellTypeEnum.Btn && isEditableDiary(col, item)">
+            <i class="material-icons" (click)="openAddDiaryDialog(col, item)" style="color: #ddd">create</i>
+          </ng-container>
+          <ng-container *ngIf="item[col].cellType == DiaryCellTypeEnum.Arr">
+            <div *ngFor="let c of item[col].value" (click)="openAddDiaryDialog(col, item)"
+              [className]="isEventDeleted(c)?'deleted':''">
+              {{ c.criterionCatalogCode + "/" + c.kpiPoint }}
+            </div>
+            <!-- <button mat-button><i class="material-icons">add</i></button> -->
+          </ng-container>
+        </mat-cell>
+      </ng-container>
+      <!-- loop day of month -->
+
+      <ng-container matColumnDef="Comment">
+        <mat-header-cell *matHeaderCellDef>{{col}}</mat-header-cell>
+        <mat-cell *matCellDef="let item" class="centre">
+          <span>{{ item.comment }}</span>
+        </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+    </mat-table>
+  </div>
+</div>

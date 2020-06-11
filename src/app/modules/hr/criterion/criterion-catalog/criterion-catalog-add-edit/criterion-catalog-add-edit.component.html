@@ -1,0 +1,57 @@
+<div class="content-wrapper">
+  <div class="form-wrapper">
+    <div class="page-header">
+      <h5>Quản lý tiêu chuẩn đánh giá</h5>
+    </div>
+    <div flex fxLayout="row" fxLayoutGap="20px" *ngIf="item != null" class="formRow">
+      <mat-form-field fxFlex="15">
+        <mat-label>Mã</mat-label>
+        <input matInput [(ngModel)]="item.code" required>
+      </mat-form-field>
+      <mat-form-field fxFlex="10">
+        <mat-label>Điểm tối thiểu</mat-label>
+        <input *ngIf="this.item.isMinus" matInput type="number" [(ngModel)]="minPointMinus" required max="-1" required
+          oninput="validity.valid||(value='')">
+        <input *ngIf="!this.item.isMinus" matInput type="number" [(ngModel)]="minPoint" required min="1" required
+          oninput="validity.valid||(value='')">
+      </mat-form-field>
+      <mat-form-field fxFlex="10">
+        <mat-label>Điểm tối đa</mat-label>
+        <input *ngIf="this.item.isMinus" matInput type="number" [(ngModel)]="maxPointMinus" required max="-1" required
+          oninput="validity.valid||(value='')">
+        <input *ngIf="!this.item.isMinus" matInput type="number" [(ngModel)]="maxPoint" required min="1" required
+          oninput="validity.valid||(value='')">
+      </mat-form-field>
+      <mat-form-field fxFlex="39">
+        <mat-label>Tiêu chuẩn cha</mat-label>
+        <mat-extend-select [showTooltip]="false" required class="width" [items]="this.kpiCatalogs" [valueField]="'id'"
+          [displayField]="'criterionTitle'" [(selectedModel)]="item.parentId" [applyPanelOverride]="true">
+        </mat-extend-select>
+        <input matInput style="display: none;" [(ngModel)]="item.parentId">
+      </mat-form-field>
+    </div>
+    <div flex fxLayout="row" fxLayoutGap="10px" *ngIf="item != null" class="formRow">
+      <mat-form-field fxFlex="59">
+        <mat-label>Tiêu đề</mat-label>
+        <textarea matInput placeholder="Ghi chú" [(ngModel)]="item.criterionTitle" rows="4" required></textarea>
+      </mat-form-field>
+      <div fxFlex="10">
+        <mat-checkbox name="chkIsFolder" class="example-margin" [(ngModel)]="item.isFolder">
+          <span class="checkbox">Danh mục</span>
+        </mat-checkbox>
+      </div>
+      <div fxFlex="10">
+        <mat-checkbox name="chkIsMinus" class="example-margin" [(ngModel)]="item.isMinus">
+          <span class="checkbox">Trừ điểm</span>
+        </mat-checkbox>
+      </div>
+    </div>
+    <div flex fxLayout="row">
+      <div fxFlex="80"></div>
+      <div fxFlex>
+        <button mat-raised-button color="primary" (click)="addOrEdit()">Lưu</button>
+        <a mat-raised-button color="warn" routerLink="/hr/hr-crit-catalog" style="margin-left: 10px;">Hủy</a>
+      </div>
+    </div>
+  </div>
+</div>

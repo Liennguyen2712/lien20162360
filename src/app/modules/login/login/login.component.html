@@ -1,0 +1,23 @@
+<div id="login-form">
+  <form [formGroup]="form">
+      <div class="container">
+          <div class="form-field" style="text-align: center; margin-bottom: 20px">
+              <h3>ĐĂNG NHẬP</h3>
+          </div>
+          <div class="form-field">
+              <label><i class="fa fa-user"></i><i style="padding-left: 5px;"><b>Tên đăng nhập*</b></i></label>
+              <input type="text" name="username" formControlName="username">
+          </div>
+          <div class="form-field">
+              <label><i class="fa fa-lock"></i><i style="padding-left: 5px;"><b>Mật khẩu*</b></i></label>
+              <input type="password" name="password" formControlName="password">
+          </div>
+          <label>
+              <input type="checkbox" checked="checked" name="remember"> Nhớ mật khẩu
+          </label>
+          <div class="form-buttons">
+              <button class="button button-primary" (click)="login()">Đăng nhập</button>
+          </div>
+      </div>
+  </form>
+</div>

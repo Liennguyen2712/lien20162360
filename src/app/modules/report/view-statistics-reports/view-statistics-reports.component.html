@@ -1,0 +1,283 @@
+<div class="content-wrapper">
+  <div class="page-header">
+    <h4>BẢNG TỔNG HỢP KẾT QUẢ ĐÁNH GIÁ CBNV BRG</h4>
+  </div>
+  <div class="filter-container">
+    <div flex fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="10px" fxLayoutGap.sm="0px" style="margin-top:15px;">
+      <div fxFlex="20">
+        <app-month-picker #monthFilter></app-month-picker>
+      </div>
+      <mat-form-field fxFlex="30">
+        <mat-label>Phòng ban</mat-label>
+        <!-- <mat-select placeholder="Select" [(ngModel)]="orgId" required>
+
+          <mat-option [value]="org.id" *ngFor="let org of Orgs">
+            {{org.name}}
+          </mat-option>
+        </mat-select> -->
+
+        <mat-extend-select required class="width" [items]="this.Orgs" [valueField]="'id'" [displayField]="'name'"
+        [(selectedModel)]="orgId" [applyPanelOverride]="true" >
+      </mat-extend-select>
+      <input matInput style="display: none;" [(ngModel)]="orgId" required>
+
+      </mat-form-field>
+
+      <div fxFlex="30">
+        <button mat-raised-button color="primary" (click)="search()">Tìm kiếm</button>
+        <button mat-raised-button color="primary" (click)="export()" style="margin-left: 10px;">Export Excel</button>
+      </div>
+    </div>
+  </div>
+
+  <table cdk-table [dataSource]="dataSource" multiTemplateDataRows>
+    <ng-container cdkColumnDef="STT">
+      <th cdk-header-cell *cdkHeaderCellDef [ngStyle]="{'display': 'none'}">STT</th>
+      <td cdk-cell *cdkCellDef='let item;'>
+        <div>{{item.stt}}</div>
+      </td>
+    </ng-container>
+    <ng-container cdkColumnDef="STT1">
+      <th cdk-header-cell *cdkHeaderCellDef [attr.rowspan]="2">STT</th>
+    </ng-container>
+
+    <ng-container cdkColumnDef="SumEmp">
+      <th cdk-footer-cell *cdkFooterCellDef [attr.colspan]="2" class="footerCell">Tổng số CBNV đã đánh giá</th>
+    </ng-container>
+    <ng-container cdkColumnDef="SumPercent">
+      <th cdk-footer-cell *cdkFooterCellDef [attr.colspan]="2" class="footerCell">Tỷ lệ xếp loại chung</th>
+    </ng-container>
+
+    <ng-container cdkColumnDef="organization">
+      <th cdk-header-cell *cdkHeaderCellDef [ngStyle]="{'display': 'none'}">Đơn vị</th>
+      <td cdk-cell *matCellDef='let item' [attr.colspan]="item.organization">
+        <div>{{item.organization}}</div>
+      </td>
+    </ng-container>
+    <ng-container cdkColumnDef="organization1">
+      <th cdk-header-cell *cdkHeaderCellDef [attr.rowspan]="2" class="colName">Phòng ban</th>
+    </ng-container>
+
+    <ng-container cdkColumnDef="TongSoNhanVien">
+      <th cdk-header-cell *cdkHeaderCellDef [ngStyle]="{'display': 'none'}" class="colJobTitle">Tổng số CBNV</th>
+      <td cdk-cell *cdkCellDef='let item' class="colJobTitle">
+        <div>{{item.tongSoNhanVien}}</div>
+      </td>
+      <th cdk-footer-cell *cdkFooterCellDef [attr.rowspan]="2"><div>{{empCount}}</div></th>
+    </ng-container>
+    <ng-container cdkColumnDef="TongSoNhanVien1">
+      <th cdk-header-cell *cdkHeaderCellDef [attr.rowspan]="2" class="colJobTitle">Tổng số CBNV</th>
+    </ng-container>
+
+    <ng-container cdkColumnDef="aPlusCount">
+      <th cdk-header-cell *cdkHeaderCellDef class="colPoint">Số lượng</th>
+      <td cdk-cell *cdkCellDef='let item' class="colPoint">
+        <div>{{item.ap}}</div>
+      </td>
+      <th cdk-footer-cell *cdkFooterCellDef [attr.rowspan]="2"><div>{{aPlusCount}}</div></th>
+    </ng-container>
+    <ng-container cdkColumnDef="aPlusPercent">
+      <th cdk-header-cell *cdkHeaderCellDef class="colPoint">Tỷ lệ</th>
+      <td cdk-cell *cdkCellDef='let item' class="colPoint">
+        <div>{{item.apPercent}}%</div>
+      </td>
+      <th cdk-footer-cell *cdkFooterCellDef [attr.rowspan]="2"><div>{{aPlusPercent}}%</div></th>
+    </ng-container>
+    <ng-container cdkColumnDef="aPlusGroup">
+      <th cdk-header-cell *cdkHeaderCellDef [attr.colspan]="2" class="colGroup">
+        Xếp loại A+
+      </th>
+    </ng-container>
+
+    <ng-container cdkColumnDef="aCount">
+      <th cdk-header-cell *cdkHeaderCellDef class="colPoint">Số lượng</th>
+      <td cdk-cell *matCellDef='let item' class="colPoint">
+        <div>{{item.a}}</div>
+      </td>
+      <th cdk-footer-cell *cdkFooterCellDef [attr.rowspan]="2"><div>{{aCount}}</div></th>
+    </ng-container>
+    <ng-container cdkColumnDef="aPercent">
+      <th cdk-header-cell *cdkHeaderCellDef class="colPoint">Tỷ lệ</th>
+      <td cdk-cell *cdkCellDef='let item' class="colPoint">
+        <div>{{item.aPercent}}%</div>
+      </td>
+      <th cdk-footer-cell *cdkFooterCellDef [attr.rowspan]="2"><div>{{aPercent}}%</div></th>
+    </ng-container>
+    <ng-container cdkColumnDef="aGroup">
+      <th cdk-header-cell *cdkHeaderCellDef [attr.colspan]="2" class="colGroup">
+        Xếp loại A
+      </th>
+    </ng-container>
+
+    <ng-container cdkColumnDef="aMinusCount">
+      <th cdk-header-cell *cdkHeaderCellDef class="colPoint">Số lượng</th>
+      <td cdk-cell *matCellDef='let item' class="colPoint">
+        <div>{{item.am}}</div>
+      </td>
+      <th cdk-footer-cell *cdkFooterCellDef [attr.rowspan]="2"><div>{{aMinusCount}}</div></th>
+    </ng-container>
+    <ng-container cdkColumnDef="aMinusPercent">
+      <th cdk-header-cell *cdkHeaderCellDef class="colPoint">Tỷ lệ</th>
+      <td cdk-cell *cdkCellDef='let item' class="colPoint">
+        <div>{{item.amPercent}}%</div>
+      </td>
+      <th cdk-footer-cell *cdkFooterCellDef [attr.rowspan]="2"><div>{{aMinusPercent}}%</div></th>
+    </ng-container>
+    <ng-container cdkColumnDef="aMinusGroup">
+      <th cdk-header-cell *cdkHeaderCellDef [attr.colspan]="2" class="colGroup">
+        Xếp loại A-
+      </th>
+    </ng-container>
+
+    <ng-container cdkColumnDef="bPlusCount">
+      <th cdk-header-cell *cdkHeaderCellDef class="colPoint">Số lượng</th>
+      <td cdk-cell *matCellDef='let item' class="colPoint">
+        <div>{{item.bp}}</div>
+      </td>
+      <th cdk-footer-cell *cdkFooterCellDef [attr.rowspan]="2"><div>{{bPlusCount}}</div></th>
+    </ng-container>
+    <ng-container cdkColumnDef="bPlusPercent">
+      <th cdk-header-cell *cdkHeaderCellDef class="colPoint">Tỷ lệ</th>
+      <td cdk-cell *cdkCellDef='let item' class="colPoint">
+        <div>{{item.bpPercent}}%</div>
+      </td>
+      <th cdk-footer-cell *cdkFooterCellDef [attr.rowspan]="2"><div>{{bPlusPercent}}%</div></th>
+    </ng-container>
+    <ng-container cdkColumnDef="bPlusGroup">
+      <th cdk-header-cell *cdkHeaderCellDef [attr.colspan]="2" class="colGroup">
+        Xếp loại B+
+      </th>
+    </ng-container>
+
+    <ng-container cdkColumnDef="bCount">
+      <th cdk-header-cell *cdkHeaderCellDef class="colPoint">Số lượng</th>
+      <td cdk-cell *matCellDef='let item' class="colPoint">
+        <div>{{item.b}}</div>
+      </td>
+      <th cdk-footer-cell *cdkFooterCellDef [attr.rowspan]="2"><div>{{bCount}}</div></th>
+    </ng-container>
+    <ng-container cdkColumnDef="bPercent">
+      <th cdk-header-cell *cdkHeaderCellDef class="colPoint">Tỷ lệ</th>
+      <td cdk-cell *cdkCellDef='let item' class="colPoint">
+        <div>{{item.bPercent}}%</div>
+      </td>
+      <th cdk-footer-cell *cdkFooterCellDef [attr.rowspan]="2"><div>{{bPercent}}%</div></th>
+    </ng-container>
+    <ng-container cdkColumnDef="bGroup">
+      <th cdk-header-cell *cdkHeaderCellDef [attr.colspan]="2" class="colGroup">
+        Xếp loại B
+      </th>
+    </ng-container>
+
+
+    <ng-container cdkColumnDef="bMinusCount">
+      <th cdk-header-cell *cdkHeaderCellDef class="colPoint">Số lượng</th>
+      <td cdk-cell *matCellDef='let item' class="colPoint">
+        <div>{{item.bm}}</div>
+      </td>
+      <th cdk-footer-cell *cdkFooterCellDef [attr.rowspan]="2"><div>{{bMinusCount}}</div></th>
+    </ng-container>
+    <ng-container cdkColumnDef="bMinusPercent">
+      <th cdk-header-cell *cdkHeaderCellDef class="colPoint">Tỷ lệ</th>
+      <td cdk-cell *cdkCellDef='let item' class="colPoint">
+        <div>{{item.bmPercent}}%</div>
+      </td>
+      <th cdk-footer-cell *cdkFooterCellDef [attr.rowspan]="2"><div>{{bMinusPercent}}%</div></th>
+    </ng-container>
+    <ng-container cdkColumnDef="bMinusGroup">
+      <th cdk-header-cell *cdkHeaderCellDef [attr.colspan]="2" class="colGroup">
+        Xếp loại B-
+      </th>
+    </ng-container>
+
+
+    <ng-container cdkColumnDef="cCount">
+      <th cdk-header-cell *cdkHeaderCellDef class="colPoint">Số lượng</th>
+      <td cdk-cell *matCellDef='let item' class="colPoint">
+        <div>{{item.c}}</div>
+      </td>
+      <th cdk-footer-cell *cdkFooterCellDef [attr.rowspan]="2"><div>{{cCount}}%</div></th>
+    </ng-container>
+    <ng-container cdkColumnDef="cPercent">
+      <th cdk-header-cell *cdkHeaderCellDef class="colPoint">Tỷ lệ</th>
+      <td cdk-cell *cdkCellDef='let item' class="colPoint">
+        <div>{{item.cPercent}}%</div>
+      </td>
+      <th cdk-footer-cell *cdkFooterCellDef [attr.rowspan]="2"><div>{{cPercent}}%</div></th>
+    </ng-container>
+    <ng-container cdkColumnDef="cGroup">
+      <th cdk-header-cell *cdkHeaderCellDef [attr.colspan]="2" class="colGroup">
+        Xếp loại C
+      </th>
+    </ng-container>
+
+    <tr cdk-header-row
+      *cdkHeaderRowDef="['STT1', 'organization1', 'TongSoNhanVien1', 'aPlusGroup', 'aGroup','aMinusGroup', 'bPlusGroup', 'bGroup','bMinusGroup', 'cGroup']">
+    </tr>
+    <tr cdk-header-row *cdkHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+
+    <tr mat-footer-row
+      *matFooterRowDef="['SumEmp','TongSoNhanVien','aPlusCount', 'aPlusPercent', 'aCount', 'aPercent', 'aMinusCount', 'aMinusPercent', 'bPlusCount', 'bPlusPercent', 'bCount', 'bPercent','bMinusCount', 'bMinusPercent', 'cCount', 'cPercent']">
+    </tr>
+    <tr mat-footer-row *matFooterRowDef="['SumPercent']"></tr>
+  </table>
+
+  <table border="1" style="margin-top:30px" class="bottomTable">
+    <thead>
+      <tr>
+        <th rowspan="2" class="colBottomTableName textCenter">Bảng xếp loại</th>
+        <th colspan="2" class="textCenter">Kết quả đánh giá tháng {{month}} năm {{year}}</th>
+      </tr>
+      <tr>
+        <th class="colBottomTableCount textCenter">Số CBNV</th>
+        <th class="colBottomTableCount textCenter">Tỉ lệ xếp loại</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Loại A+ (Hoàn thành xuất sắc)</td>
+        <td>{{aPlusCount}}</td>
+        <td>{{aPlusPercent}}%</td>
+      </tr>
+      <tr>
+        <td>Loại A (Hoàn thành nhiệm vụ) </td>
+        <td>{{aCount}}</td>
+        <td>{{aPercent}}%</td>
+      </tr>
+      <tr>
+        <td>Loại A- (Cơ bản hoàn thành nhiệm vụ)</td>
+        <td>{{aMinusCount}}</td>
+        <td>{{aMinusPercent}}%</td>
+      </tr>
+      <tr>
+        <td>Loại B+ (Cần cải thiện) </td>
+        <td>{{bPlusCount}}</td>
+        <td>{{bPlusPercent}}%</td>
+      </tr>
+      <tr>
+        <td>Loại B (Cần cải thiện) </td>
+        <td>{{bCount}}</td>
+        <td>{{bPercent}}%</td>
+      </tr>
+      <tr>
+        <td>Loại B- (Cần cải thiện) </td>
+        <td>{{bMinusCount}}</td>
+        <td>{{bMinusPercent}}%</td>
+      </tr>
+      <tr>
+        <td>Loại C (Không đạt yêu cầu) </td>
+        <td>{{cCount}}</td>
+        <td>{{cPercent}}%</td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <th>Tổng số CBNV đã đánh giá/Tỷ lệ</th>
+        <th>{{empCount}}</th>
+        <th></th>
+      </tr>
+    </tfoot>
+  </table>
+</div>

@@ -1,0 +1,203 @@
+{
+    "apiServerUrl": "https://demokpibe.brggroup.vn",
+    "authUrls": {
+        "token": "/oauth/token"
+    },
+    "menuUrls": {
+        "getMenu": "/api/menu/getmenu"
+    },
+    "userUrls": {
+        "changePassword": "/api/user/changepassword",
+        "getUsers": "/api/user/getusers"
+    },
+    "kpiUrls": {
+        "paging": "/api/kpi/getPaging",
+        "pagingMng": "/api/kpi/getPagingMng",
+        "pagingMngLv2": "/api/kpi/getPagingMngLv2",
+        "count": "/api/kpi/count",
+        "addOrEdit": "/api/kpi/addOrEdit",
+        "get": "/api/kpi/get",
+        "orgs": "/api/kpi/GetOrgs",
+        "updateKpiEmp": "/api/kpi/UpdateKpiEmp",
+        "processKpiLevel2Mng": "/api/kpi/ProcessKpiLevel2Mng",
+        "updateStatusUncompletedKpi": "/api/kpi/updateStatusUncompletedKpi",
+        "updateKpiHRSendManager": "/api/kpi/updateKpiHRSendManager",
+        "updateKpiSendCorLeader": "/api/kpi/updateKpiSendCorLeader",
+        "updateKpiComplete": "/api/kpi/updateKpiComplete",
+        "updateKpiCompleteRange": "/api/kpi/updateKpiCompleteRange",
+        "countMng": "/api/kpi/countMng",
+        "countMngLv2": "/api/kpi/countMngLv2",
+        "updateHRUnlockKpiRange": "/api/kpi/UpdateHRUnlockKpiRange",
+        "updateVIP": "/api/kpi/updateKpiVIP",
+        "getDivisionManagerKpiPaging": "/api/kpi/getDivisionManagerKpiPaging",
+        "countDivisionManager": "/api/kpi/countDivisionManager",
+        "getIsKpiValidForDivManager": "/api/kpi/getIsKpiValidForDivManager",
+        "getOrgsByDivManager": "/api/kpi/getOrgsByDivManager",
+        "processRangeKpiLevel2Mng": "/api/kpi/processRangeKpiLevel2Mng",
+        "updateRangeKpiBusinessApplication": "/api/kpi/updateRangeKpiBusinessApplication",
+        "updateRangeKpiHRManagerPropose": "/api/kpi/updateRangeKpiHRManagerPropose",
+        "countHrManagerKpi": "/api/kpi/countHrManagerKpi",
+        "getHrManagerKpiPaging": "/api/kpi/getHrManagerKpiPaging"
+    },
+    "viewUserEventDiary": {
+        "paging": "/api/viewusereventdiary/getPaging",
+        "count": "/api/viewusereventdiary/count",
+        "addOrEdit": "/api/viewusereventdiary/addOrEdit",
+        "get": "/api/viewusereventdiary/get"
+    },
+    "diaryCriterionDetailUrls": {
+        "addOrEdit": "/api/diarycriteriondetail/addoredit",
+        "removeByManagerLv2": "/api/diarycriteriondetail/removeByManagerLv2"
+    },
+    "eventDiaryUrls": {
+        "getEvByManager": "/api/eventdiary/geteventdiarybymanager",
+        "getEvByManagerLv2": "/api/eventdiary/geteventdiarybymanagerlv2",
+        "getEventByKpiManager": "/api/eventdiary/geteventdiarybykpimanager",
+        "getMonthlyEventDiaryByHRManager": "/api/eventdiary/GetMonthlyEventDiaryByHRManager",
+        "getEvByEmp": "/api/eventdiary/getMonthlyEventDiaryByEmp",
+        "getEvByKpiId": "/api/eventdiary/GetMonthlyEventDiaryByKpiId",
+        "getLevel1UserByLevel2Manager": "/api/eventdiary/getLevel1UserByLevel2Manager",
+        "getPagingExistedEventDiaryByYearMonth": "/api/eventdiary/GetPagingExistedEventDiaryByYearMonth",
+        "getPagingMissingEventDiaryByYearMonth": "/api/eventdiary/GetPagingMissingEventDiaryByYearMonth",
+        "getUsers": "/api/eventdiary/getUsers",
+        "getEventByDivManager": "/api/eventdiary/getEventByDivManager",
+        "addRangeDiaryKpi": "/api/eventdiary/addRangeDiaryKpi",
+        "updateRangeDiaryKpiConfigChanged": "/api/eventdiary/updateRangeDiaryKpiConfigChanged"
+    },
+    "userOrgUrls": {
+        "getEDUsersByOrg": "/api/userorg/getEDUsersByOrg",
+        "get": "/api/userorg/get",
+        "getbyname": "/api/userorg/getbyname",
+        "paging": "/api/userorg/getPaging",
+        "addOrEdit": "/api/userorg/addOrEditAsync",
+        "count": "/api/userorg/count",
+        "orgs": "/api/userorg/GetOrgs",
+        "users": "/api/userorg/GetUsers",
+        "jobTitles": "/api/userorg/GetJobTitles",
+        "getOrgByUser": "/api/userorg/GetOrgByUser",
+        "getEDUsersByEvent": "/api/userorg/getEDUsersByEvent",
+        "getOrgsByCurrentLevel2Manager": "/api/userorg/GetOrgsByCurrentLevel2Manager",
+        "getOrgsByCurrentLevel1Manager": "/api/userorg/GetOrgsByCurrentLevel1Manager",
+        "getLevel1ManagerUserOrg": "/api/userorg/getLevel1ManagerUserOrg",
+        "getLevel2ManagerUserOrg": "/api/userorg/getLevel2ManagerUserOrg",
+        "getAllOrg": "/api/userorg/getAllOrgs",
+        "getAllUser": "/api/userorg/getAllUsers",
+        "getAllJobTitle": "/api/userorg/getAllJobTitles",
+        "deleteUser": "/api/userorg/DeleteUser",
+        "countDivisionManager": "/api/userorg/countDivisionManager",
+        "searchPagingDivisionManager": "/api/userorg/searchPagingDivisionManager",
+        "getDivisionManagerPermission": "/api/userorg/getDivisionManagerPermission",
+        "saveDivisionManagerPermission": "/api/userorg/saveDivisionManagerPermission",
+        "isVip": "/api/userorg/isvip"
+    },
+    "criterionCatalogUrls": {
+        "getCriterionCatalog": "/api/CriterionCatalog/GetCriterionCatalog",
+        "paging": "/api/CriterionCatalog/getPaging",
+        "count": "/api/CriterionCatalog/count",
+        "addOrEdit": "/api/CriterionCatalog/addOrEdit",
+        "get": "/api/CriterionCatalog/get",
+        "getAll": "/api/CriterionCatalog/getAll"
+    },
+    "eventDiaryConfigUrls": {
+        "getConfigOrgByLevel1Manager": "/api/eventdiaryconfig/GetConfigOrgByLevel1Manager",
+        "getConfigOrgByLevel2Manager": "/api/eventdiaryconfig/getConfigOrgByLevel2Manager",
+        "getConfigOrgByKpiManager": "/api/eventdiaryconfig/getConfigOrgByKpiManager",
+        "getConfigOrgByDivManager": "/api/eventdiaryconfig/getConfigOrgByDivManager",
+        "paging": "/api/eventdiaryconfig/getPaging",
+        "count": "/api/eventdiaryconfig/count",
+        "addOrEdit": "/api/eventdiaryconfig/addOrEdit",
+        "get": "/api/eventdiaryconfig/get",
+        "orgList": "/api/eventdiaryconfig/getOrgs",
+        "userList": "/api/eventdiaryconfig/getUsers"
+    },
+    "kpiPeriodConfigUrls": {
+        "updateKPIByYearMonthEvent": "/api/KpiPeriodConfig/updateKPIByYearMonthEvent",
+        "paging": "/api/KpiPeriodConfig/getPaging",
+        "count": "/api/KpiPeriodConfig/count",
+        "addOrEdit": "/api/KpiPeriodConfig/addOrEdit",
+        "get": "/api/KpiPeriodConfig/get",
+        "orgList": "/api/KpiPeriodConfig/getOrgs",
+        "userList": "/api/KpiPeriodConfig/getUsers"
+    },
+    "View_KpiEvaluation_OrganizationUrls": {
+        "search": "/api/KpiEvaluationOrg/search",
+        "getOrgs": "/api/KpiEvaluationOrg/getOrgs"
+    },
+    "ViewStatisticsReports": {
+        "search": "/api/View_Statistics_Reports/search",
+        "getOrgs": "/api/View_Statistics_Reports/getOrgs"
+    },
+    "KpiStatus": [
+        {
+            "id": 1,
+            "title": "Khởi tạo"
+        },
+        {
+            "id": 2,
+            "title": "Đang đánh giá"
+        },
+        {
+            "id": 3,
+            "title": "Đã gửi nhân sự"
+        },
+        {
+            "id": 4,
+            "title": "Chờ GĐ nhân sự duyệt"
+        },
+        {
+            "id": 5,
+            "title": "Trình lãnh đạo phê duyệt"
+        },
+        {
+            "id": 6,
+            "title": "Hoàn thành"
+        }
+    ],
+    "empTransferUrls": {
+        "paging": "/api/empTransfer/getPaging",
+        "count": "/api/empTransfer/count",
+        "addOrEdit": "/api/empTransfer/addOrEdit",
+        "get": "/api/empTransfer/get"
+    },
+    "employmentHistoryUrls": {
+        "paging": "/api/employmentHistory/getPaging",
+        "count": "/api/employmentHistory/count"
+    },
+    "workStatus": [
+        {
+            "code": "CT",
+            "title": "Chính thức"
+        },
+        {
+            "code": "TV",
+            "title": "Thử việc"
+        },
+        {
+            "code": "NV",
+            "title": "Đã nghỉ việc"
+        },
+        {
+            "code": "TS",
+            "title": "Nghỉ thai sản"
+        },
+        {
+            "code": "KH",
+            "title": "Khác"
+        }
+    ],
+    "orgUrls": {
+        "paging": "/api/org/getPaging",
+        "count": "/api/org/count",
+        "addOrEdit": "/api/org/addOrEdit",
+        "get": "/api/org/get",
+        "getAll": "/api/org/getAll"
+    },
+    "kpiCriterionTypeUrls": {
+        "paging": "/api/kpiCriterionType/getPaging",
+        "count": "/api/kpiCriterionType/count",
+        "addOrEdit": "/api/kpiCriterionType/addOrEdit",
+        "get": "/api/kpiCriterionType/get",
+        "getAll": "/api/kpiCriterionType/getAll",
+        "getKpiCatalogs": "/api/kpiCriterionType/getKpiCatalogs"
+    }
+}

@@ -1,0 +1,345 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~bootstrap/dist/css/bootstrap.css";
+@import '~open-iconic/font/css/open-iconic-bootstrap.css';
+@import "~@ng-select/ng-select/themes/material.theme.css";
+@import '~material-design-icons/iconfont/material-icons.css';
+@import "~@angular/material/prebuilt-themes/indigo-pink.css"; 
+/* @import "assets/css/material.css"; */
+
+.button-header{
+    float: right;
+    padding-bottom: 5px;
+}
+
+.button-header button {
+    margin: 2px 12px;
+}
+
+.mat-divider-header {
+    margin-top: 0px !important;
+}
+
+.page-wrapper{
+    padding: 1px;
+    min-height: 500px;
+}
+
+.page-content{
+    background-color: #ffffff;
+    padding: 10px 15px;
+    height: 90vh;
+}
+
+.full-size-modal .modal-dialog {
+    max-width: 99%;
+  }
+ 
+.mat-row {
+    height: auto;
+}
+  
+.mat-header-row { 
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0;
+    z-index: 1;
+    background-color: inherit;
+    min-height: 20px !important;
+}
+
+.mat-table {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 1rem;
+    display: table;
+    border-collapse: collapse;
+    margin: 0px;
+}
+
+.mat-row,
+.mat-header-row
+ {
+    display: table-row;
+}
+
+/* .mat-header-row
+ {
+    height: 32px !important;
+} */
+
+.mat-cell,
+.mat-header-cell {
+    word-wrap: initial;
+    display: table-cell;
+    padding: 0px 10px 0px 10px; 
+    line-break: unset;
+    /* width: 100%; */
+    white-space: nowrap;
+    overflow: hidden;
+    justify-content: flex-end;
+    max-width: 400px;
+    min-width: 50px;
+}
+
+.mat-header-cell {
+    text-align: center !important;
+    background: rgba(161, 194, 128, 0.76);
+    border: 1px solid black;
+    color: black;
+}
+
+.centre {
+    text-align: center;
+}
+
+.align-top {
+    vertical-align: top;
+}
+
+.header-block{    
+    border-bottom: 1px solid #ddd;
+}
+
+.sidenav-wrapper{
+    background-color: #3a4651;
+    color:#F2F2F2 !important;
+    -webkit-box-shadow: 0px -1px 5px 0px rgba(64,67,125,1);
+    -moz-box-shadow: 0px -1px 5px 0px rgba(64,67,125,1);
+    box-shadow: 0px -1px 5px 0px rgba(64,67,125,1);
+}
+
+.toolbar-wrapper{
+    background-color: #d7dde4;
+    color:#F2F2F2;
+    height: 39px !important;
+    -webkit-box-shadow: 0px 0px 5px 0px rgba(64,67,125,1);
+    -moz-box-shadow: 0px 0px 5px 0px rgba(64,67,125,1);
+    box-shadow: 0px 0px 5px 0px rgba(64,67,125,1);
+}
+
+.nav-item{
+    color:#F2F2F2 !important;
+}
+
+.text-logo{
+    color:#fff;
+    text-align: center;
+}
+
+/* .table-container{
+    padding: 15px 5px;
+} */
+
+.content-wrapper{
+    padding-top: 5px;
+    height: 100%;
+}
+
+.filter-container{    
+    margin-bottom: 10px;
+    padding: 22px 12px 8px 12px;
+    /* border: 1px solid #ddd; */
+}
+
+.btn-pad{
+    margin-left: 10px;
+}
+
+.lb-sm{
+    font-size: 11px;
+    font-weight: bold;
+}
+
+label{
+    margin-bottom: 0rem;
+}
+
+.form-group-sm{    
+    margin-bottom: 0.4rem;
+}
+
+.modal-header{       
+     padding: 5px 20px 0px !important;
+}
+
+.wiget-container{
+    padding: 0px 10px 5px;    
+    margin: 0px 4px 4px 0px;
+    /* padding: 15px 0px 10px; */
+}
+
+.modal-header{
+    background-color: #E5E5E8;
+}
+
+th{
+    font-size: 12px;
+}
+
+td{
+    font-size: 14px;
+}
+
+.divider{
+    margin-top: 0px;
+    margin-bottom: 0px; 
+}
+
+.lb-err{    
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    position: relative;
+    padding: 5px;
+    font-size: 12px;
+    margin-top: 8px;
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+}
+
+.label-box{
+    margin: 5px;
+}
+
+.fl-r{
+    float: right;
+}
+
+.disable-dom .form-control-sm{    
+    background-color: #e9ecef !important;
+    opacity: 1;
+}
+
+.disable-dom input{    
+    background-color: #e9ecef !important;
+    opacity: 1;
+}
+/* 
+.mat-header-cell{    
+    justify-content: center;
+}
+
+.mat-cell{    
+    justify-content: center;
+} */
+
+.wiget-wrapper{
+    padding-left: 5px;
+    padding-right: 5px;
+}
+/* 
+.cdk-global-overlay-wrapper, .cdk-overlay-container {
+    z-index: 99999 !important;
+ } */
+
+.mat-form-field-infix {
+    border-top: 0em solid transparent !important;
+}
+
+.mat-column-STT {
+    width: 20px !important;
+}
+.mat-column-actions {
+    width: 40px;
+}
+/*
+.mat-column-doc-number{
+    width: 100px;
+}
+
+.mat-column-dispatch-number{
+    width: 100px;
+}
+*/
+.mat-column-epitomize{
+    min-width: 150px;
+} 
+
+.btn-xsm {
+    font-size: 11px;
+    margin-left: 6px;
+    margin-right: 6px;
+    padding: 3px;
+    cursor: pointer;
+}
+
+.table-container{    
+    overflow-x: auto;
+    max-height: 69%;
+    overflow-y: auto;
+    margin-top: 5px;
+  }
+
+mat-footer-row, mat-row {
+    min-height: 29px !important;
+}
+
+.input-group-text-sm {    
+    padding: 0rem 0.75rem !important;    
+    font-size: 14px !important;
+}
+
+.mat-column-dispatch-number, .mat-column-sendOrg , .mat-column-sendOrg, .mat-column-project, 
+.mat-column-resolveOrg, .mat-column-deadline, .mat-column-dispatch-number, .mat-column-doc-number{
+    min-width: 129px;
+}
+
+.mat-form-field {
+    font-size: 14px;
+}
+
+.form-wrapper {
+    padding: 30px 5px 5px 10px;
+}
+
+.cell-wrapper {
+    padding: 5px 0px 5px 0px;
+    margin-top: 3px;
+    margin-bottom: 3px;
+}
+
+.no-scroll {
+    overflow: hidden !important;
+}
+
+.table-cell-datepicker {
+    width: 100px;
+}
+
+table .mat-form-field-wrapper {
+    padding-bottom: 0px;
+}
+
+.button-wrapper {
+    float: right;
+    padding: 10px;
+}
+
+.button-wrapper button {
+    margin: 2px 12px;
+}
+
+.mat-input-element:disabled {
+    color: rgba(0, 0, 0, 0.932);
+}
+
+.mat-form-field-appearance-legacy.mat-form-field-disabled .mat-form-field-underline {
+    background-color: #ddd !important;
+}
+
+.mat-form-field-appearance-legacy.mat-form-field-disabled .mat-form-field-underline {
+    background-image: none;
+}
+
+.material-icons {
+    cursor: pointer;
+}
+
+.pointer {cursor: pointer;}
+
+
+.clearFix::after{
+    content: '';
+    display: block;
+    clear: both;
+}

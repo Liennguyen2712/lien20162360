@@ -1,0 +1,22 @@
+.label-text {
+  font-size: 14px;
+  color: rgb(145, 145, 145);
+}
+
+.loading {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(180, 180, 180, 0.5);
+}
+.spinner {
+  max-width: 50px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translateY(-50%);
+  -ms-transform: translateX(-50%);
+}

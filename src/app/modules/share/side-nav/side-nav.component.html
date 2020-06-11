@@ -1,0 +1,78 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav sidenav-wrapper" fixedInViewport="true"
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="(isHandset$ | async) ? 'over' : 'side'"
+    [opened]="isOpened">
+    <mat-toolbar class="text-logo">
+      <!-- <div class="brand">
+        <div class="logo">
+            <span class="l l1"></span>
+            <span class="l l2"></span>
+            <span class="l l3"></span>
+            <span class="l l4"></span>
+            <span class="l l5"></span>
+        </div>
+        <b>
+            BRG Group
+        </b>
+    </div> -->
+      <div class="navbar-brand">
+        <div class="navbar-img">
+          <img src="assets/imgs/logo-brg.png" style="width: 89px;" />
+        </div>
+        <div class="brand-text">Phần mềm KPI</div>
+      </div>
+    </mat-toolbar>
+    <!-- Template -->
+    <ng-template #recursiveMenu let-list>
+      <mat-nav-list *ngFor="let item of list">
+        <div *ngIf="item.childs != null && item.childs.length > 0; else other_content">
+          <a mat-list-item class="nav-item" (click)="showMenu(item)">
+            {{item.text}}
+            <button mat-button mat-icon-button>
+              <mat-icon class="menu-button" [ngClass]="{'rotated' : item.isDisplayed}">expand_more</mat-icon>
+            </button>
+          </a>
+          <div class="submenu" [ngClass]="{'expanded' : item.isDisplayed}">
+            <div *ngTemplateOutlet="recursiveMenu; context:{ $implicit: item.childs }"></div>
+          </div>
+        </div>
+        <ng-template #other_content>
+          <a mat-list-item class="nav-item" routerLink="{{item.url}}" [routerLinkActive]="['is-active']">
+            {{item.text}}</a>
+        </ng-template>
+      </mat-nav-list>
+    </ng-template>
+    <!-- Template -->
+    <!-- <ng-container *ngTemplateOutlet="recursiveMenu; context:{ $implicit: menu }"></ng-container> -->
+    <div *ngTemplateOutlet="recursiveMenu; context:{ $implicit: menu }"></div>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar class="toolbar-wrapper">
+      <span class="btn btn-sm btn-default" aria-label="Toggle sidenav" id="toggler" mat-icon-button
+        (click)="toggle(drawer)">
+        <i class="fa fa-align-justify"></i>
+      </span>
+      <div class="funtional-holder">
+        <div class="fl-r">
+          <a class="helpLink" (click)='openNewTab()'>Tài liệu HDSD</a>
+          <span class="btn btn-default btn-sm">{{authAction}}</span>
+          <mat-menu #appMenu="matMenu">
+            <button mat-menu-item (click)="changePw()">Đổi mật khẩu</button>
+            <button mat-menu-item (click)="changelang('en')"><img class="flag" [src]="'assets/imgs/gb.svg'"> English</button>
+            <button mat-menu-item (click)="changelang('vn')"><img class="flag" [src]="'assets/imgs/vn.svg'">Tiếng Việt</button>
+            <!--<button mat-menu-item (click)="changePassword()">Đổi mật khẩu</button>-->
+            <button mat-menu-item (click)="signOut()">Đăng xuất</button>
+          </mat-menu>
+          <button mat-icon-button [matMenuTriggerFor]="appMenu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+        </div>
+      </div>
+    </mat-toolbar>
+    <div class="page-wrapper">
+      <div class="page-content">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

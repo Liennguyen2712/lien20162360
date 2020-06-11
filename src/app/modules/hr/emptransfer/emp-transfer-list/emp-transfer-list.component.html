@@ -1,0 +1,87 @@
+<div class="content-wrapper">
+  <div class="page-header">
+    <h4>Điều chuyển nhân sự</h4>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="filter-container" (keydown)="onFormSubmit($event)">
+    <div flex fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="15px" fxLayoutGap.sm="0px">
+      <div fxFlex="20">
+        <mat-form-field fxFlex="100">
+          <mat-label>Họ và tên</mat-label>
+          <input matInput [(ngModel)]="empName">
+        </mat-form-field>
+      </div>
+
+      <mat-form-field fxFlex="20">
+        <mat-label>Từ ngày</mat-label>
+        <input matInput [matDatepicker]="pickerFromDate" [(ngModel)]="fromDate">
+        <mat-datepicker-toggle matSuffix [for]="pickerFromDate"></mat-datepicker-toggle>
+        <mat-datepicker #pickerFromDate></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field fxFlex="20">
+        <mat-label>Đến ngày</mat-label>
+        <input matInput [matDatepicker]="pickerToDate" [(ngModel)]="toDate">
+        <mat-datepicker-toggle matSuffix [for]="pickerToDate"></mat-datepicker-toggle>
+        <mat-datepicker #pickerToDate></mat-datepicker>
+      </mat-form-field>
+      <div fxFlex="20">
+        <button mat-raised-button color="primary" (click)="searchPaging()" style="margin-right:10px">Tìm kiếm</button>
+        <button mat-raised-button color="primary" routerLink="/hr/hr-emp-transfer/0">Tạo mới</button>
+      </div>
+    </div>
+  </div>
+  <div class="table-container">
+    <mat-table class="" [dataSource]="dataSource">
+      <ng-container matColumnDef="STT">
+        <mat-header-cell *matHeaderCellDef>STT</mat-header-cell>
+        <mat-cell *matCellDef='let item; let i = index;' class="centre">{{start + i}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="code">
+        <mat-header-cell *matHeaderCellDef>Mã điều chuyển</mat-header-cell>
+        <mat-cell *matCellDef='let item' class="centre">{{item.code}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="transferDate">
+        <mat-header-cell *matHeaderCellDef>Ngày điều chuyển</mat-header-cell>
+        <mat-cell *matCellDef='let item' class="centre">{{item.transferDate | date:'dd/MM/yyyy'}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="userFullName">
+        <mat-header-cell *matHeaderCellDef>Họ và tên</mat-header-cell>
+        <mat-cell *matCellDef='let item' class="centre">{{item.empFullName}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="oldJobTitle">
+        <mat-header-cell *matHeaderCellDef>Chức danh</mat-header-cell>
+        <mat-cell *matCellDef='let item' class="centre">{{item.newJobTitleName}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="oldOrg">
+        <mat-header-cell *matHeaderCellDef>Phòng ban cũ</mat-header-cell>
+        <mat-cell *matCellDef='let item' class="centre">{{item.oldOrgName}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="newOrg">
+        <mat-header-cell *matHeaderCellDef>Phòng ban mới</mat-header-cell>
+        <mat-cell *matCellDef='let item' class="centre">{{item.newOrgName}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef>TT</mat-header-cell>
+        <mat-cell *matCellDef="let item" class="centre">
+          <!-- <button mat-icon-button>
+            <mat-icon>edit_outline</mat-icon>
+          </button> -->
+          <a [routerLink]="['/hr/hr-emp-transfer',item.id]">
+            <mat-icon>edit_outline</mat-icon>
+          </a>
+        </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+    </mat-table>
+  </div>
+  <mat-paginator [length]="countTotal" [pageSize]="length" [pageSizeOptions]="pageSizeOptions"></mat-paginator>
+</div>

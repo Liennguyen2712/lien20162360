@@ -1,0 +1,19 @@
+<div class="filter-container" (keydown)="searchPagingForm()">
+    <div flex fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="9px" fxLayoutGap.sm="0px">
+        <div FxFlex="15">
+            <app-month-picker #monthFilter></app-month-picker>
+        </div>
+        <div fxFlex="15">
+          <button mat-raised-button color="primary" (click)="searchPagingForm()">Tìm kiếm</button>
+          <!-- <button mat-raised-button color="primary" style="margin-left: 5px">Thêm mới</button> -->
+        </div>
+    </div>
+</div>
+
+<br>
+<ng-container *ngIf="yearMonth">
+    <label class="lb-sm">Danh sách phòng/ban đã có Nhật ký sự kiện phát sinh</label>
+    <app-existed-config *ngIf="yearMonth" [yearMonth]="yearMonth" [orgs]="orgs" #updateForm (changedTrigger)="changeTrigger($event)"></app-existed-config>
+    <label class="lb-sm">Danh sách phòng/ban chưa có Nhật ký sự kiện phát sinh</label>
+    <app-missing-config *ngIf="yearMonth" [yearMonth]="yearMonth" [orgs]="orgs" #addForm (changedTrigger)="changeTrigger($event)"></app-missing-config>
+</ng-container>

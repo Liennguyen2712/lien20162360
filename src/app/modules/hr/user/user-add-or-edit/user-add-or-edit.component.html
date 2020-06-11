@@ -1,0 +1,181 @@
+<div class="content-wrapper">
+  <div class="form-wrapper">
+    <div class="page-header">
+      <h5>Thông tin nhân sự</h5>
+    </div>
+    <div flex fxLayout="row" fxLayoutGap="50px" *ngIf="item != null" class="formRow">
+      <div fxFlex="20">
+        <mat-form-field fxFlex="60">
+          <mat-label>Mã nhân viên</mat-label>
+          <input matInput [(ngModel)]="item.code" required>
+        </mat-form-field>
+      </div>
+      <div fxFlex>
+        <mat-form-field fxFlex="60">
+          <mat-label>Họ tên nhân viên</mat-label>
+          <input matInput [(ngModel)]="item.userFullName">
+        </mat-form-field>
+      </div>
+      <div fxFlex>
+        <mat-form-field fxFlex="60">
+          <mat-label>Ngày sinh</mat-label>
+          <input matInput [matDatepicker]="pickerDOB" [(ngModel)]="item.dob">
+          <mat-datepicker-toggle matSuffix [for]="pickerDOB"></mat-datepicker-toggle>
+          <mat-datepicker #pickerDOB></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </div>
+    <div flex fxLayout="row" fxLayoutGap="50px" *ngIf="item != null" class="formRow">
+      <mat-form-field fxFlex="20">
+        <mat-label>Số CMND/CCCD</mat-label>
+        <input matInput [(ngModel)]="item.idCardNumber">
+      </mat-form-field>
+      <div fxFlex>
+        <mat-form-field fxFlex="60">
+          <mat-label>Ngày cấp</mat-label>
+          <input matInput [matDatepicker]="pickerStartDate" [(ngModel)]="item.idCardDate">
+          <mat-datepicker-toggle matSuffix [for]="pickerStartDate"></mat-datepicker-toggle>
+          <mat-datepicker #pickerStartDate></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div fxFlex>
+        <mat-form-field fxFlex="50">
+          <mat-label>Nơi cấp</mat-label>
+          <input matInput [(ngModel)]="item.idCardLocation">
+        </mat-form-field>
+      </div>
+    </div>
+    <div flex fxLayout="row" fxLayoutGap="50px" *ngIf="item != null" class="formRow">
+      <mat-form-field fxFlex="20">
+        <mat-label>Ngày bắt đầu làm việc</mat-label>
+        <input matInput [matDatepicker]="pickerStartDate" [(ngModel)]="item.startWorkDate">
+        <mat-datepicker-toggle matSuffix [for]="pickerStartDate"></mat-datepicker-toggle>
+        <mat-datepicker #pickerStartDate></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field fxFlex>
+        <mat-label>Phòng ban</mat-label>
+        <mat-extend-select required class="width" [items]="this.Orgs" [valueField]="'id'" [displayField]="'name'"
+          [(selectedModel)]="item.orgId" [applyPanelOverride]="true" [disabled]="isReadOnlyUser">
+        </mat-extend-select>
+        <input matInput style="display: none;" [(ngModel)]="item.orgId" required>
+      </mat-form-field>
+      <div fxFlex>
+        <mat-form-field fxFlex="50">
+          <mat-label>Chức danh</mat-label>
+          <mat-select placeholder="Select" [(ngModel)]="item.jobTitleId" [disabled]="isReadOnlyUser">
+            <mat-option [value]="title.id" *ngFor="let title of JobTitles">
+              {{title.title}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <div flex fxLayout="row" fxLayoutGap="50px" *ngIf="item != null" class="formRow">
+      <mat-form-field fxFlex="20">
+        <mat-label>Mẫu đánh giá</mat-label>
+        <mat-select placeholder="Select" [(ngModel)]="item.kpiType" required>
+          <mat-option value="NV">
+            Nhân viên
+          </mat-option>
+          <mat-option value="QL">
+            Quản lý
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div fxFlex>
+        <mat-form-field fxFlex="60">
+          <mat-label>Email</mat-label>
+          <input matInput [(ngModel)]="item.userEmail">
+        </mat-form-field>
+      </div>
+      <div fxFlex>
+        <mat-form-field fxFlex="60">
+          <mat-label>Tình trạng làm việc</mat-label>
+          <mat-select placeholder="Select" [(ngModel)]="item.status" required>
+            <mat-option [value]="itm.code" *ngFor="let itm of workStatus">{{itm.title}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <div flex fxLayout="row" fxLayoutGap="50px" *ngIf="item != null" class="formRow">
+      <div fxFlex="20">
+        <app-month-picker controlText="Kỳ đánh giá đầu tiên" #monthFilter></app-month-picker>
+      </div>
+      <div flex="15">
+        <mat-checkbox name="isOrgManager" class="example-margin" [(ngModel)]="item.isOrgManager">
+          <span class="checkbox">VIP</span>
+        </mat-checkbox>
+      </div>
+    </div>
+    <div flex class="formRow" fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="15px" fxLayoutGap.sm="0px"
+      *ngIf="item != null && !item.isHasLogin">
+      <div flex="15">
+        <mat-checkbox class="example-margin" [(ngModel)]="item.isCreateUser" [(indeterminate)]="indeterminate"
+          [labelPosition]="labelPosition" (change)="createUserChanged()">
+          <span class="checkbox">Tạo đăng nhập mới</span>
+        </mat-checkbox>
+      </div>
+      <mat-form-field fxFlex="15">
+        <mat-label>Tên đăng nhập</mat-label>
+        <input matInput [(ngModel)]="item.userName" required>
+      </mat-form-field>
+    </div>
+    <div *ngIf="item != null && item.isHasLogin">Tên đăng nhập: {{item.userName}}</div>
+    <!-- <div *ngIf="item != null && item.isHasLogin"> -->
+    <div *ngIf="item != null">
+      <h6 style="margin-top:15px;">Thông tin nhóm quyền</h6>
+      <div flex fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="15px" *ngIf="item != null">
+        <div flex="15">
+          <mat-checkbox name="chkEmp" class="example-margin" [(ngModel)]="item.isEmployee" (change)="permissionChanged()">
+            <span class="checkbox">Nhân viên</span>
+          </mat-checkbox>
+        </div>
+        <div flex="15">
+          <mat-checkbox name="chkLv1" class="example-margin" [(ngModel)]="item.isLevel1Manager" (change)="permissionChanged()">
+            <span class="checkbox">Quản lý trực tiếp</span>
+          </mat-checkbox>
+        </div>
+        <div flex="15">
+          <mat-checkbox name="chkLv2" class="example-margin" [(ngModel)]="item.isLevel2Manager" (change)="permissionChanged()">
+            <span class="checkbox">Quản lý cấp trên</span>
+          </mat-checkbox>
+        </div>
+        <div flex="15">
+          <mat-checkbox name="chkHr" class="example-margin" [(ngModel)]="item.isKpiManager" (change)="permissionChanged()">
+            <span class="checkbox">Quản lý đánh giá THCV</span>
+          </mat-checkbox>
+        </div>
+        <div flex="15">
+          <mat-checkbox name="chkHrD" class="example-margin" [(ngModel)]="item.isHrDirector" (change)="permissionChanged()">
+            <span class="checkbox">Giám đốc khối nhân sự</span>
+          </mat-checkbox>
+        </div>
+      </div>
+      <div flex fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="15px" *ngIf="item != null">
+        <div flex="15">
+          <mat-checkbox name="chkHrMng" class="example-margin" [(ngModel)]="item.isEmpManager" (change)="permissionChanged()">
+            <span class="checkbox">Quản lý lao động</span>
+          </mat-checkbox>
+        </div>
+        <div flex="15">
+          <mat-checkbox name="chkReport" class="example-margin" [(ngModel)]="item.isReport" (change)="permissionChanged()">
+            <span class="checkbox">Xem báo cáo thống kê</span>
+          </mat-checkbox>
+        </div>
+        <div flex="15">
+          <mat-checkbox name="chkDivision" class="example-margin" [(ngModel)]="item.isDivisionManager" (change)="permissionChanged()">
+            <span class="checkbox">Quản lý Khối-Đơn vị</span>
+          </mat-checkbox>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="button-wrapper" style="height: 130px;">
+    <a mat-raised-button class="nav-item" color="primary" routerLink="/emp/event-diary-config">Mở cấu hình NKSK</a>
+    <!-- <a mat-raised-button class="nav-item" color="primary" routerLink="/emp/event-config-add-or-edit/{{item != null ? item.eventDiaryConfigId : 0}}">Mở cấu hình NKSK</a> -->
+    <button mat-raised-button color="primary" (click)="showHistory()">Quá trình công tác</button>
+    <button mat-raised-button color="primary" (click)="addOrEdit()">Lưu</button>
+    <a mat-raised-button color="warn" routerLink="/hr/user">Hủy</a>
+  </div>
+</div>

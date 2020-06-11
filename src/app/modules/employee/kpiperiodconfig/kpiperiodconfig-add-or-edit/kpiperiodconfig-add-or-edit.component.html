@@ -1,0 +1,78 @@
+<div class="content-wrapper">
+  <div class="page-header">
+    <h4>Thiết lập kỳ đánh giá KPI</h4>
+  </div>
+  <div class="filter-container" *ngIf="this.item">
+    <div flex fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="20px" fxLayoutGap.sm="0px">
+      <div fxFlex="20">
+        <mat-form-field fxFlex="100">
+          <mat-label>Mã</mat-label>
+          <input matInput [(ngModel)]="item.code">
+        </mat-form-field>
+      </div>
+      <div fxFlex="20">
+        <mat-form-field fxFlex="100">
+          <mat-label>Kỳ đánh giá</mat-label>
+          <mat-select placeholder="Select" [(ngModel)]="item.periodConfig">
+            <mat-option value="T">Tháng</mat-option>
+            <mat-option value="S">6 tháng</mat-option>
+            <mat-option value="N">Năm</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div fxFlex="20">
+        <mat-form-field fxFlex="100">
+          <mat-label>Ngày đến hạn gửi đánh giá</mat-label>
+          <input matInput [(ngModel)]="item.daySendEvalation">
+        </mat-form-field>
+      </div>
+    </div>
+    <div flex fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="20px" fxLayoutGap.sm="0px">
+      <div class="label-text" fxFlex="20">Kỳ đánh giá cho (tháng/năm)</div>
+      <div *ngIf="item.id <= 0">
+        <app-month-picker #monthFilter></app-month-picker>
+      </div>
+      <div *ngIf="item.id > 0">
+        <mat-form-field fxFlex="100">
+          <mat-label>Thời gian đánh giá</mat-label>
+          {{yearMonth}}
+          <input matInput [(ngModel)]="yearMonth" style="display: none;" disabled>
+        </mat-form-field>
+      </div>
+    </div>
+    <div flex fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="20px" fxLayoutGap.sm="0px">
+      <div class="label-text" fxFlex="20">Khoảng thời gian đánh giá</div>
+      <div>
+        <mat-form-field fxFlex="100">
+          <mat-label>Từ</mat-label>
+          <input matInput [matDatepicker]="pickerFrom" [(ngModel)]="item.fromDate" (dateChange)="dateChange(1)">
+          <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
+          <mat-datepicker #pickerFrom></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field fxFlex="100">
+          <mat-label>Đến</mat-label>
+          <input matInput [matDatepicker]="pickerTo" [(ngModel)]="item.toDate" (dateChange)="dateChange(2)">
+          <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
+          <mat-datepicker #pickerTo></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </div>
+    <div flex fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="15px" fxLayoutGap.sm="0px">
+      <div fxFlex="37">
+        <mat-form-field fxFlex="100">
+          <textarea matInput placeholder="Ghi chú" [(ngModel)]="item.note" rows="3"></textarea>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="button-wrapper" style="height: 130px;">
+      <button mat-raised-button color="primary" (click)="addOrEdit()">Lưu</button>
+      <a mat-raised-button color="warn" routerLink="/emp/kpi-config">Hủy</a>
+    </div>
+  </div>
+</div>
+<!-- <div class="loading">
+  <mat-progress-spinner class="spinner" [color]="primary" [mode]="indeterminate" [value]="1">
+  </mat-progress-spinner>
+</div> -->

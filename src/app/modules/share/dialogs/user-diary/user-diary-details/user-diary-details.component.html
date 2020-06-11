@@ -1,0 +1,85 @@
+<h4 mat-dialog-title>Danh sách sự kiện phát sinh</h4>
+<div mat-dialog-content>
+  <div flex fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="10px" fxLayoutGap.sm="0px">
+    <mat-form-field fxFlex="32" appearance="standard">
+      <mat-label>Tên nhân viên</mat-label>
+      <input matInput type="text" [(ngModel)]="model.userFullName" disabled>
+    </mat-form-field>
+    <mat-form-field fxFlex="32" appearance="standard">
+      <mat-label>Tổng điểm KPI (%)</mat-label>
+      <input matInput type="text" [(ngModel)]="kpiPoint" disabled>
+    </mat-form-field>
+  </div>
+  <div class="table-container">
+    <mat-table #tbl [dataSource]="model.details">
+      <ng-container matColumnDef="STT">
+        <mat-header-cell *matHeaderCellDef>STT</mat-header-cell>
+        <mat-cell *matCellDef='let item; let i = index;' class="centre"><span
+            [className]="item.isDeleted? 'deleted' : ''">{{i + 1}}</span></mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="criterionDate">
+        <mat-header-cell *matHeaderCellDef>Ngày phát sinh</mat-header-cell>
+        <mat-cell *matCellDef="let item" class="centre">
+          <span [className]="item.isDeleted? 'deleted' : ''">{{ item.criterionDate | date: 'dd/MM/yyyy'}}</span>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="criterionCatalogCode">
+        <mat-header-cell *matHeaderCellDef>Mã sự kiện</mat-header-cell>
+        <mat-cell *matCellDef="let item" class="centre">
+          <span [className]="item.isDeleted? 'deleted' : ''">{{ item.criterionCatalogCode }}</span>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="criterionCatalogName">
+        <mat-header-cell *matHeaderCellDef>Tên mã sự kiện</mat-header-cell>
+        <mat-cell *matCellDef="let item" class="centre">
+          <span title="{{ item.criterionCatalogName }}"
+            [className]="item.isDeleted? 'deleted' : ''">{{ item.criterionCatalogName }}</span>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="kpiPoint">
+        <mat-header-cell *matHeaderCellDef>
+          <div>Trọng số </div>
+          <div>KPI(%)</div>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let item" class="centre">
+          <span [className]="item.isDeleted? 'deleted' : ''">{{ item.kpiPoint }}</span>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="createdByUserFullName">
+        <mat-header-cell *matHeaderCellDef>Người đánh giá</mat-header-cell>
+        <mat-cell *matCellDef="let item" class="centre">
+          <span [className]="item.isDeleted? 'deleted' : ''">{{ item.createdByUserFullName }}</span>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="createdByUserTitle">
+        <mat-header-cell *matHeaderCellDef>
+          <div>Chức danh người</div>
+          <div>đánh giá</div>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let item" class="centre">
+          <span [className]="item.isDeleted? 'deleted' : ''">{{ item.createdByUserTitle }}</span>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="comment">
+        <mat-header-cell *matHeaderCellDef>Ghi chú</mat-header-cell>
+        <mat-cell *matCellDef="let item" class="centre">
+          <span title="{{ item.comment }}" [className]="item.isDeleted? 'deleted' : ''">{{ item.comment }}</span>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="action">
+        <mat-header-cell *matHeaderCellDef>TT</mat-header-cell>
+        <mat-cell *matCellDef="let item" class="centre">
+          <a *ngIf="model.canDeleteEvent && !item.isDeleted && (isLevel2Manager || item.isLevel1MngAndOwner || item.isHrAndOwner|| item.isHrMngAndOwner)"
+            color="warn" mat-button (click)="deleteEvent(item)">
+            <mat-icon>remove_circle_outline</mat-icon>
+          </a>
+        </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+    </mat-table>
+  </div>
+</div>
+<div mat-dialog-actions>
+  <button color="primary" mat-button [mat-dialog-close]="true">Ok</button>
+</div>

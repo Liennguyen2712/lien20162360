@@ -1,0 +1,52 @@
+<h4 mat-dialog-title>Thêm sự kiện phát sinh</h4>
+<div mat-dialog-content>
+  <div flex fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="10px" fxLayoutGap.sm="0px">
+    <mat-form-field fxFlex="24" appearance="standard">
+      <mat-label>Ngày</mat-label>
+      <input matInput type="text" [(ngModel)]="data.date" disabled style="display: none">
+      <span>{{ data.date | date:'EEEE dd/MM/yyyy'}}</span>
+      <!-- <mat-form-field>
+        <input [matDatepicker]="picker" [(ngModel)]="data.editedDate">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field> -->
+    </mat-form-field>
+    <mat-form-field fxFlex="24" appearance="standard">
+      <mat-label>Tên nhân viên</mat-label>
+      <input matInput [(ngModel)]="data.emp.userFullName" disabled>
+    </mat-form-field>
+    <mat-form-field fxFlex="44" appearance="standard">
+      <mat-label>Phòng/Đơn vị</mat-label>
+      <input matInput [(ngModel)]="data.emp.orgName" disabled>
+    </mat-form-field>
+  </div>
+  <div flex fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="10px" fxLayoutGap.sm="0px">
+    <mat-form-field fxFlex="66" appearance="standard">
+      <mat-label>Mã sự kiện</mat-label>
+      <mat-select [(ngModel)]="model.criterionCatalogId" (ngModelChange)="fetchValue()" required
+        [matTooltip]="toolTipData">
+        <mat-option *ngFor="let cc of criterionCatalogs" [value]="cc.id" title="{{cc.criterionTitle}}">
+          {{cc.code + ' - ' + cc.criterionTitle}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field fxFlex="16" appearance="standard">
+      <mat-label>Trọng số KPI(%)</mat-label>
+      <input type="number" matInput [(ngModel)]="model.kpiPoint" min="1" required oninput="validity.valid||(value='')">
+    </mat-form-field>
+    <mat-form-field fxFlex="24" appearance="standard">
+      <mat-label>Khoảng tỉ trọng (%)</mat-label>
+      <input matInput [(ngModel)]="model.pointRange" disabled>
+    </mat-form-field>
+  </div>
+  <div flex fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="10px" fxLayoutGap.sm="0px">
+    <mat-form-field fxFlex="100" appearance="standard">
+      <mat-label>Giải thích (thành tích/lỗi vi phạm)</mat-label>
+      <textarea matInput [(ngModel)]="model.comment"></textarea>
+    </mat-form-field>
+  </div>
+</div>
+<div mat-dialog-actions>
+  <button color="warn" mat-button [mat-dialog-close]="false">Cancel</button>
+  <button color="primary" mat-button (click)="submit()">Ok</button>
+</div>

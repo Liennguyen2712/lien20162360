@@ -1,0 +1,109 @@
+<div class="content-wrapper">
+  <div class="page-header">
+    <h4>Cấu hình kỳ đánh giá KPI</h4>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="filter-container" (keydown)="onFormSubmit($event)">
+    <div flex fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="9px" fxLayoutGap.sm="0px">
+      <div fxFlex="15">
+        Kỳ đánh giá
+      </div>
+      <div fxFlex="20">
+        <mat-form-field>
+          <mat-select placeholder="Select" [(ngModel)]="periodConfig">
+            <mat-option value="T">Tháng</mat-option>
+            <mat-option value="S">6 tháng</mat-option>
+            <mat-option value="N">Năm</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <div flex fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="9px" fxLayoutGap.sm="0px">
+      <div fxFlex="15">
+        Khoảng thời gian thực hiện đánh giá
+      </div>
+      <div fxFlex="20">
+        <mat-form-field>
+          <mat-label>Từ ngày</mat-label>
+          <input matInput [matDatepicker]="pickerFrom" [(ngModel)]="fromDate">
+          <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
+          <mat-datepicker #pickerFrom></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div fxFlex="20">
+        <mat-form-field>
+          <mat-label>Đến ngày</mat-label>
+          <input matInput [matDatepicker]="pickerTo" [(ngModel)]="toDate">
+          <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
+          <mat-datepicker #pickerTo></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </div>
+    <div flex fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="9px" fxLayoutGap.sm="0px">
+      <div fxFlex="37"></div>
+      <div fxFlex="20">
+        <button mat-raised-button color="primary" (click)="searchPaging()">Tìm kiếm</button>
+        <button mat-raised-button color="primary" style="margin-left: 5px"
+          [routerLink]="['/emp/kpi-config-add-or-edit',0]">Thêm mới</button>
+      </div>
+    </div>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="table-container">
+    <mat-table class="" [dataSource]="dataSource">
+      <ng-container matColumnDef="STT">
+        <mat-header-cell *matHeaderCellDef>#</mat-header-cell>
+        <mat-cell *matCellDef='let item; let i = index;'>{{start + i}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="Code">
+        <mat-header-cell *matHeaderCellDef>Mã</mat-header-cell>
+        <mat-cell *matCellDef='let item'>{{item.code}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="PeriodConfig">
+        <mat-header-cell *matHeaderCellDef>Kỳ đánh giá</mat-header-cell>
+        <mat-cell *matCellDef='let item'>
+          <span *ngIf="item.periodConfig==='T'">Tháng</span>
+          <span *ngIf="item.periodConfig==='S'">6 tháng</span>
+          <span *ngIf="item.periodConfig==='N'">Năm</span>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="yearMonth">
+        <mat-header-cell *matHeaderCellDef>Kỳ đánh giá cho</mat-header-cell>
+        <mat-cell *matCellDef='let item'>{{GetMonthYear(item.yearMonth)}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="DaySendEvalation">
+        <mat-header-cell *matHeaderCellDef>Ngày đến hạn gửi đánh giá</mat-header-cell>
+        <mat-cell *matCellDef='let item'>{{item.daySendEvalation}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="DateRange">
+        <mat-header-cell *matHeaderCellDef>Khoảng thời gian thực hiện đánh giá</mat-header-cell>
+        <mat-cell *matCellDef='let item'>
+          {{item.fromDate | date:'dd/MM/yyyy'}} - {{item.toDate | date:'dd/MM/yyyy'}}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="Note">
+        <mat-header-cell *matHeaderCellDef>Ghi chú</mat-header-cell>
+        <mat-cell *matCellDef='let item'>{{item.note}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef>TT</mat-header-cell>
+        <mat-cell *matCellDef="let item">
+          <!-- <button mat-icon-button>
+            <mat-icon>edit_outline</mat-icon>
+          </button> -->
+          <a [routerLink]="['/emp/kpi-config-add-or-edit',item.id]">
+            <mat-icon>edit_outline</mat-icon>
+          </a>
+        </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+    </mat-table>
+  </div>
+  <mat-paginator [length]="countTotal" [pageSize]="length" [pageSizeOptions]="pageSizeOptions"></mat-paginator>
+</div>

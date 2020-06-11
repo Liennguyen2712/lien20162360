@@ -1,0 +1,108 @@
+<div class="content-wrapper">
+  <div class="page-header">
+    <h4>Danh sách bản KH và đánh giá THCV hàng tháng</h4>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="filter-container" (keydown)="onFormSubmit($event)">
+    <div flex fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="9px" fxLayoutGap.sm="0px">
+      <app-month-picker #monthFilter></app-month-picker>
+      <mat-form-field fxFlex="12">
+        <mat-label>Tên nhân viên</mat-label>
+        <mat-extend-select required class="width" [items]="this.users" [valueField]="'userName'"
+          [displayField]="'userFullName'" [(selectedModel)]="empUserName" [applyPanelOverride]="true">
+        </mat-extend-select>
+        <input matInput style="display: none;" [(ngModel)]="empUserName">
+      </mat-form-field>
+      <mat-form-field fxFlex="30">
+        <mat-label>Phòng ban</mat-label>
+        <mat-extend-select required class="width" [items]="this.Orgs" [valueField]="'id'" [displayField]="'name'"
+          [placeHolder]="'Phòng ban'" [(selectedModel)]="orgId" [applyPanelOverride]="true" style="max-height:50px;">
+        </mat-extend-select>
+        <input matInput style="display: none;" [(ngModel)]="orgId">
+      </mat-form-field>
+      <div fxFlex="12">
+        <button mat-raised-button color="primary" (click)="searchPaging()">Tìm kiếm</button>
+        <!-- <button mat-raised-button color="primary" style="margin-left: 5px">Thêm mới</button> -->
+      </div>
+    </div>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="table-container">
+    <mat-table class="" [dataSource]="dataSource">
+      <ng-container matColumnDef="STT">
+        <mat-header-cell *matHeaderCellDef>#</mat-header-cell>
+        <mat-cell *matCellDef='let item; let i = index;' class="centre">{{start + i}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="kpi-month">
+        <mat-header-cell *matHeaderCellDef>Thời gian đánh giá</mat-header-cell>
+        <mat-cell *matCellDef='let item' class="centre">{{item.kpiMonth | date:'MM/yyyy'}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="org-name">
+        <mat-header-cell *matHeaderCellDef>Đơn vị</mat-header-cell>
+        <mat-cell *matCellDef='let item'>{{item.orgName}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="employee-name">
+        <mat-header-cell *matHeaderCellDef>Nhân viên</mat-header-cell>
+        <mat-cell *matCellDef='let item' class="centre">{{item.employeeName}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="level1ManagerFullName">
+        <mat-header-cell *matHeaderCellDef>Quản lý trực tiếp</mat-header-cell>
+        <mat-cell *matCellDef='let item' class="centre">{{item.level1ManagerFullName}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="point">
+        <mat-header-cell *matHeaderCellDef>Tổng điểm</mat-header-cell>
+        <mat-cell *matCellDef='let item' class="centre">
+          <div *ngIf="item.finalKpiPoint && item.finalKpiPoint>0">
+            {{item.finalKpiPoint}}
+          </div>
+          <div *ngIf="!item.finalKpiPoint && !item.finalKpiPoint>0&&item.hrKpiPoint && item.hrKpiPoint>0">
+            {{item.hrKpiPoint}}
+          </div>
+          <div *ngIf="!item.finalKpiPoint && !item.finalKpiPoint>0 && !item.hrKpiPoint && !item.hrKpiPoint>0">
+            {{item.level1ManagerKpiPoint}}
+          </div>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="classification">
+        <mat-header-cell *matHeaderCellDef>Xếp loại</mat-header-cell>
+        <mat-cell *matCellDef='let item' class="centre">
+          <div *ngIf="item.finalKpiClassification">
+            {{item.finalKpiClassification}}
+          </div>
+          <div *ngIf="!item.finalKpiClassification && item.hrKpiPointClassification">
+            {{item.hrKpiPointClassification}}
+          </div>
+          <div *ngIf="!item.finalKpiClassification && !item.hrKpiPointClassification">
+            {{item.level1ManagerKpiClassification}}
+          </div>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="statusName">
+        <mat-header-cell *matHeaderCellDef>Trạng thái</mat-header-cell>
+        <mat-cell *matCellDef='let item' class="centre">{{item.statusName}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef>TT</mat-header-cell>
+        <mat-cell *matCellDef="let item" class="centre">
+          <!-- <button mat-icon-button>
+            <mat-icon>edit_outline</mat-icon>
+          </button> -->
+          <a [routerLink]="['/mng/kpi-detail',item.id]">
+            <mat-icon>edit_outline</mat-icon>
+          </a>
+        </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+    </mat-table>
+  </div>
+  <mat-paginator [length]="countTotal" [pageSize]="length" [pageSizeOptions]="pageSizeOptions"></mat-paginator>
+</div>

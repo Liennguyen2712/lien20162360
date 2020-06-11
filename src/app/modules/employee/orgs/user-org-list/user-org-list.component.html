@@ -1,0 +1,87 @@
+<div class="content-wrapper">
+  <div class="page-header">
+    <h4>Cấu hình KPI và người dùng </h4>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="filter-container" (keydown)="onFormSubmit($event)">
+    <div flex fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="9px" fxLayoutGap.sm="0px">
+      <div fxFlex="6">
+        <label class="lb-sm"><i>Thời gian đánh giá</i></label>
+      </div>
+      <mat-form-field fxFlex="8">
+        <mat-label>Tháng</mat-label>
+        <mat-select placeholder="Select">
+          <mat-option value="1">Option</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field fxFlex="8">
+        <mat-label>Năm</mat-label>
+        <mat-select placeholder="Select">
+          <mat-option value="1">Option</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field fxFlex="12">
+        <mat-label>Trạng thái</mat-label>
+        <mat-select placeholder="Select">
+          <mat-option value="0">Năm</mat-option>
+          <mat-option value="1">Option</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div fxFlex="8">
+        <button mat-raised-button color="primary">Tìm kiếm</button>        
+      </div>
+      <div fxFlex="8">        
+        <button mat-raised-button color="primary" style="margin-left: 5px">Thêm mới</button>
+      </div>
+    </div>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="table-container">
+    <mat-table class="" [dataSource]="dataSource">
+      <ng-container matColumnDef="STT">
+        <mat-header-cell *matHeaderCellDef>#</mat-header-cell>
+        <mat-cell *matCellDef='let item; let i = index;'>{{start + i}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="kpi-month">
+        <mat-header-cell *matHeaderCellDef>Tháng</mat-header-cell>
+        <mat-cell *matCellDef='let item'>{{item.kpiMonth | date:'dd-MM-yyyy'}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="org-name">
+        <mat-header-cell *matHeaderCellDef>Đơn vị</mat-header-cell>
+        <mat-cell *matCellDef='let item'>{{item.orgName}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="employee-name">
+        <mat-header-cell *matHeaderCellDef>Tên nhân viên</mat-header-cell>
+        <mat-cell *matCellDef='let item'>{{item.employeeName}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="level1ManagerName">
+        <mat-header-cell *matHeaderCellDef>Tên quản lý</mat-header-cell>
+        <mat-cell *matCellDef='let item'>{{item.level1ManagerName}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="statusName">
+        <mat-header-cell *matHeaderCellDef>Trạng thái</mat-header-cell>
+        <mat-cell *matCellDef='let item'>{{item.statusName}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef>TT</mat-header-cell>
+        <mat-cell *matCellDef="let item">
+          <!-- <button mat-icon-button>
+            <mat-icon>edit_outline</mat-icon>
+          </button> -->
+          <a [routerLink]="['/emp/kpi-add-or-edit',item.id]">
+            <mat-icon>edit_outline</mat-icon>
+          </a>
+        </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+    </mat-table>
+  </div>
+  <mat-paginator [length]="countTotal" [pageSize]="5" [pageSizeOptions]="pageSizeOptions"></mat-paginator>
+</div>

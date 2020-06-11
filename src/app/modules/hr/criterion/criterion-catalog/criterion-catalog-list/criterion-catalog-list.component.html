@@ -1,0 +1,84 @@
+<div class="content-wrapper">
+  <div class="page-header">
+    <h4>Danh sách tiêu chuẩn đánh giá</h4>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="filter-container" (keydown)="onFormSubmit($event)">
+    <div flex fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="15px" fxLayoutGap.sm="0px">
+      <div fxFlex="20">
+        <mat-form-field fxFlex="100">
+          <mat-label>Mã</mat-label>
+          <input matInput [(ngModel)]="filterCode">
+        </mat-form-field>
+      </div>
+      <div fxFlex="20">
+        <mat-form-field fxFlex="100">
+          <mat-label>Tên</mat-label>
+          <input matInput [(ngModel)]="filterName">
+        </mat-form-field>
+      </div>
+      <div fxFlex="20">
+        <button mat-raised-button color="primary" (click)="searchPaging()" style="margin-right:10px">Tìm kiếm</button>
+        <button mat-raised-button color="primary" routerLink="/hr/hr-crit-catalog/0">Tạo mới</button>
+      </div>
+    </div>
+  </div>
+  <div class="table-container">
+    <mat-table class="" [dataSource]="dataSource">
+      <ng-container matColumnDef="STT">
+        <mat-header-cell *matHeaderCellDef>STT</mat-header-cell>
+        <mat-cell *matCellDef='let item; let i = index;' class="centre">{{start + i}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="code">
+        <mat-header-cell *matHeaderCellDef>Mã</mat-header-cell>
+        <mat-cell *matCellDef='let item' class="centre">{{item.code}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="criterionTitle">
+        <mat-header-cell *matHeaderCellDef>Tiêu đề</mat-header-cell>
+        <mat-cell *matCellDef='let item' class="centre"><div title="{{item.criterionTitle}}">{{item.criterionTitle}}</div></mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="minimumPoint">
+        <mat-header-cell *matHeaderCellDef>Điểm tối thiểu</mat-header-cell>
+        <mat-cell *matCellDef='let item' class="centre">{{item.minimumPoint}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="maximumPoint">
+        <mat-header-cell *matHeaderCellDef>Điểm tối đa</mat-header-cell>
+        <mat-cell *matCellDef='let item' class="centre">{{item.maximumPoint}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="parentName">
+        <mat-header-cell *matHeaderCellDef>Tiêu chuẩn cha</mat-header-cell>
+        <mat-cell *matCellDef='let item' class="centre"><div title="{{item.parentName}}">{{item.parentName}}</div></mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="isFolder">
+        <mat-header-cell *matHeaderCellDef>Danh mục</mat-header-cell>
+        <mat-cell *matCellDef='let item' class="centre">
+          <span *ngIf="item.isFolder">
+            <mat-icon color="primary">done</mat-icon>
+          </span>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="isMinus">
+        <mat-header-cell *matHeaderCellDef>Trừ điểm</mat-header-cell>
+        <mat-cell *matCellDef='let item' class="centre">
+          <span *ngIf="item.isMinus">
+            <mat-icon color="primary">done</mat-icon>
+          </span>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef>TT</mat-header-cell>
+        <mat-cell *matCellDef="let item" class="centre">
+          <a [routerLink]="['/hr/hr-crit-catalog',item.id]">
+            <mat-icon>edit_outline</mat-icon>
+          </a>
+        </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+    </mat-table>
+  </div>
+  <mat-paginator [length]="countTotal" [pageSize]="length" [pageSizeOptions]="pageSizeOptions"></mat-paginator>
+</div>

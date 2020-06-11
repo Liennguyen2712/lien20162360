@@ -1,0 +1,7 @@
+.cdk-global-overlay-wrapper, .cdk-overlay-container {
+    z-index: 99999 !important;
+ }
+
+ .mat-form-field {
+    line-height: 1.35 !important;
+ }

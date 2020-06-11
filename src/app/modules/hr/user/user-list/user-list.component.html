@@ -1,0 +1,107 @@
+<div class="content-wrapper">
+  <div class="page-header">
+    <h4>Danh sách nhân viên</h4>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="filter-container" (keydown)="onFormSubmit($event)">
+    <div flex fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="15px" fxLayoutGap.sm="0px">
+      <div fxFlex="20">
+        <mat-form-field fxFlex="100">
+          <mat-label>Họ và tên</mat-label>
+          <input matInput [(ngModel)]="txtName">
+        </mat-form-field>
+      </div>
+      <mat-form-field fxFlex="30">
+        <mat-label>Phòng ban</mat-label>
+        <mat-extend-select required class="width" [items]="this.Orgs" [valueField]="'id'" [displayField]="'name'"
+          [(selectedModel)]="orgId" [applyPanelOverride]="true">
+        </mat-extend-select>
+        <input matInput style="display: none;" [(ngModel)]="orgId">
+      </mat-form-field>
+      <div fxFlex="20">
+        <button mat-raised-button color="primary" (click)="searchPaging()" style="margin-right:10px">Tìm kiếm</button>
+        <button mat-raised-button color="primary" routerLink="/hr/user-add-or-edit/0">Tạo mới</button>
+      </div>
+    </div>
+  </div>
+  <div class="table-container">
+    <mat-table class="" [dataSource]="dataSource">
+      <ng-container matColumnDef="STT">
+        <mat-header-cell *matHeaderCellDef>STT</mat-header-cell>
+        <mat-cell *matCellDef='let item; let i = index;' class="centre">{{start + i}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="code">
+        <mat-header-cell *matHeaderCellDef>Mã nhân viên</mat-header-cell>
+        <mat-cell *matCellDef='let item' class="centre">{{item.code}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef>Họ tên nhân viên</mat-header-cell>
+        <mat-cell *matCellDef='let item' class="centre">{{item.userFullName}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="dob">
+        <mat-header-cell *matHeaderCellDef>Ngày sinh</mat-header-cell>
+        <mat-cell *matCellDef='let item' class="centre">{{item.dob | date:'dd/MM/yyyy'}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="jobTitle">
+        <mat-header-cell *matHeaderCellDef>Chức danh</mat-header-cell>
+        <mat-cell *matCellDef='let item' class="centre">{{item.jobTitle}}</mat-cell>
+      </ng-container>
+      <!-- 
+      <ng-container matColumnDef="level1Manager">
+        <mat-header-cell *matHeaderCellDef>Quản lý trực tiếp</mat-header-cell>
+        <mat-cell *matCellDef='let item' class="centre">{{item.level1ManagerFullName}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="level2Manager">
+        <mat-header-cell *matHeaderCellDef>Quản lý cấp trên</mat-header-cell>
+        <mat-cell *matCellDef='let item' class="centre">{{item.level2ManagerFullName}}</mat-cell>
+      </ng-container> -->
+
+      <ng-container matColumnDef="org">
+        <mat-header-cell *matHeaderCellDef>Phòng/đơn vị</mat-header-cell>
+        <mat-cell *matCellDef='let item' class="centre">{{item.orgName}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="email">
+        <mat-header-cell *matHeaderCellDef>Email</mat-header-cell>
+        <mat-cell *matCellDef='let item' class="centre">{{item.userEmail}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="firstKpiPeriod">
+        <mat-header-cell *matHeaderCellDef>Ngày đi làm đầu tiên</mat-header-cell>
+        <mat-cell *matCellDef='let item' class="centre">{{item.startWorkDate | date:'dd/MM/yyyy'}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <mat-header-cell *matHeaderCellDef>Tình trạng làm việc</mat-header-cell>
+        <mat-cell *matCellDef='let item' class="centre">
+          <span *ngIf="item.status=='CT'">Chính thức</span>
+          <span *ngIf="item.status=='TV'">Thử việc</span>
+          <span *ngIf="item.status=='NV'">Đã nghỉ việc</span>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef>TT</mat-header-cell>
+        <mat-cell *matCellDef="let item" class="centre">
+          <!-- <button mat-icon-button>
+            <mat-icon>edit_outline</mat-icon>
+          </button> -->
+          <a [routerLink]="['/hr/user-add-or-edit',item.id]">
+            <mat-icon>edit_outline</mat-icon>
+          </a>
+          <!-- <a (click)="removeUser(item)">
+            <mat-icon>remove_circle_outline</mat-icon>
+          </a> -->
+        </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+    </mat-table>
+  </div>
+  <mat-paginator [length]="countTotal" [pageSize]="length" [pageSizeOptions]="pageSizeOptions"></mat-paginator>
+</div>

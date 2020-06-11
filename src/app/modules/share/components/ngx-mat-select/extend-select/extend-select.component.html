@@ -1,0 +1,31 @@
+<ng-container *ngTemplateOutlet='group ? reactive : template'>
+</ng-container>
+<ng-template #reactive>
+  <mat-form-field [formGroup]="group" class="{{this.class}}">
+    <mat-label>{{placeHolder}}</mat-label>
+    <mat-select [panelClass]="applyPanelOverride ? 'panel-override-2' : 'panel-override'" placeholder=""
+      [disableOptionCentering]="true" [formControl]="ItemControl" #singleSelect>
+      <mat-option>
+        <ngx-mat-select-search [formControl]="FilterCtrl"></ngx-mat-select-search>
+      </mat-option>
+      <mat-option *ngFor="let itm of filteredItems | async" [value]="itm[valueField]">
+        {{itm[displayField]}}{{displayField2?'-'+itm[displayField2]:''}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</ng-template>
+
+<ng-template #template>
+  <!-- <mat-form-field class="{{this.class}}">
+    <mat-label>{{placeHolder}}</mat-label> -->
+  <mat-select [disabled]="this.disabled" placeholder="" [(ngModel)]="this.selectedModel"
+    (ngModelChange)="change($event)" #singleSelect [matTooltip]="toolTipData">
+    <mat-option>
+      <ngx-mat-select-search [formControl]="FilterCtrl"></ngx-mat-select-search>
+    </mat-option>
+    <mat-option *ngFor="let itm of filteredItems | async" [value]="itm[valueField]">
+      {{itm[displayField]}}{{displayField2?'-'+itm[displayField2]:''}}
+    </mat-option>
+    </mat-select>
+  <!-- </mat-form-field> -->
+</ng-template>

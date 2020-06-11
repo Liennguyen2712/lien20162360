@@ -1,0 +1,147 @@
+.sidenav-container {
+  height: 100%;
+}
+
+.sidenav {
+  max-width: 280px;
+}
+
+.sidenav .mat-toolbar {
+  background: inherit;
+}
+
+.mat-toolbar.mat-primary {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+/* menu: https://stackoverflow.com/questions/49896257/how-to-create-a-menu-with-sub-menu-using-angular-5*/
+
+.menu-button {
+  transition: 300ms ease-in-out;
+  transform: rotate(0deg);
+}
+
+.menu-button.rotated {
+  transform: rotate(180deg);
+}
+
+.submenu {
+  overflow-y: hidden;
+  transition: 300ms ease-in-out;
+  height: 0;
+  background-color: #414e5a;
+}
+
+.submenu.expanded {
+  height: auto;
+}
+
+.funtional-holder {
+  width: 100%;
+}
+
+/* ==================================================== */
+.brand {
+  color: #fff;
+  text-align: left;
+  padding-left: 25px;
+  line-height: 70px;
+  font-size: 16px;
+}
+
+.logo {
+  display: inline-block;
+  width: 45px;
+  height: 25px;
+  vertical-align: middle;
+  margin-right: 5px;
+  position: relative;
+}
+
+.logo .l {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background-color: #59c2e6;
+  position: absolute;
+}
+
+.logo .l.l1 {
+  bottom: 0;
+  left: 0;
+}
+
+.logo .l.l2 {
+  width: 7px;
+  height: 7px;
+  bottom: 13px;
+  left: 10px;
+}
+
+.logo .l.l3 {
+  width: 7px;
+  height: 7px;
+  bottom: 4px;
+  left: 17px;
+}
+
+.logo .l.l4 {
+  bottom: 13px;
+  left: 25px;
+}
+
+.logo .l.l5 {
+  bottom: 0;
+  left: 34px;
+}
+
+.is-active {
+  background-color: #2d363f;
+  color: #fff;
+}
+
+.mat-list-option:focus,
+.mat-list-option:hover,
+.mat-nav-list .mat-list-item:focus,
+.mat-nav-list .mat-list-item:hover {
+  /* background: rgba(0,0,0,.04); */
+
+  background-color: #2d363f !important;
+  color: #fff;
+}
+
+.navbar-brand {
+  margin: 0;
+}
+
+.navbar-img {
+  float: left;
+}
+
+.text-logo {
+  padding: 5px;
+  height: 100px !important;
+}
+
+.brand-text {
+  padding-top: 15px;
+  float: left;
+  text-transform: uppercase;
+  font-size: 14px;
+  left: 0;
+  position: relative;
+}
+
+.helpLink {
+  font-size: 13px;
+  text-decoration: underline !important;
+  color: rgb(7, 33, 117) !important;
+  cursor: pointer !important;
+  margin-right: 10px;
+}
+
+.flag {
+  max-width: 20px;
+}

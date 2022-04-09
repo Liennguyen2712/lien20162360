@@ -38,7 +38,7 @@
     "jwt-decode": "^2.2.0",
     "linq-es2015": "^2.4.33",
     "material-design-icons": "^3.0.1",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "ngx-mat-select-search": "^1.7.4",
     "ngx-select-dropdown": "^1.0.1",
     "open-iconic": "^1.1.1",

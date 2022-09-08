@@ -31,7 +31,7 @@
     "bootstrap": "^4.2.1",
     "core-js": "^2.5.4",
     "d3": "^4.13.0",
-    "exceljs": "^1.10.0",
+    "exceljs": "^1.15.0",
     "file-saver": "^2.0.2",
     "font-awesome": "^4.7.0",
     "hammerjs": "^2.0.8",
